@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 function rotatePlayer(cube, camera, dir) {
     const angleRadians = Math.PI/40; // voi muuttaa, kyse kulmanopeudesta
     let currentPosition = {x: camera.position.x, z:camera.position.z};
@@ -18,6 +20,13 @@ function rotatePlayer(cube, camera, dir) {
             break;
     }
 }
+/**
+ * 
+ * @param {*} cube 
+ * @param {THREE.PerspectiveCamera} camera 
+ * @param {*} dir 
+ * @param {*} jump 
+ */
 
 function moveInUniverse(cube, camera, dir, jump) {
     const cubeStartPosition = cube.position.y;
@@ -30,8 +39,10 @@ function moveInUniverse(cube, camera, dir, jump) {
     }
     switch(dir) {
         case "forward":
-            cube.position.z -= 0.1;
-            camera.position.z -= 0.1;
+            //cube.position += camera.direction * 0.1;
+            let cameraDir = camera.getWorldDirection(new THREE.Vector3());
+            camera.position.copy(camera.getWorldPosition(new THREE.Vector3()).clone().add(cameraDir.multiplyScalar(0.01)))
+            //camera.position.copy(camera.position.clone().add(camera.direction.clone().multiplyScalar(0.01)));
             break;
         case "backward":
             cube.position.z += 0.1;

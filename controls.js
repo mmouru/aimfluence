@@ -1,4 +1,17 @@
-import * as THREE from 'three';
+
+import { 
+    stopMovingForward,
+    startMovingForward,
+    startMovingRight,
+    stopMovingRight,
+    startMovingLeft,
+    stopMovingLeft,
+    startMovingBackward,
+    stopMovingBackward,
+} from './movement';
+
+// Initial values when the game loads
+
 
 function rotatePlayer(cube, camera, dir) {
     const angleRadians = Math.PI/40; // voi muuttaa, kyse kulmanopeudesta
@@ -20,65 +33,28 @@ function rotatePlayer(cube, camera, dir) {
             break;
     }
 }
+
 /**
  * 
  * @param {*} cube 
- * @param {THREE.PerspectiveCamera} camera 
- * @param {*} dir 
- * @param {*} jump 
+ * @param {*} camera 
  */
-
-function moveInUniverse(cube, camera, dir, jump) {
-    const cubeStartPosition = cube.position.y;
-    //console.log(cubeStartPosition)
-    if (jump) {
-        for (let i = 0; i <= 30; i++) {
-            cube.position.y += 0.05;
-            camera.position.y += 0.05
-        }
-    }
-    switch(dir) {
-        case "forward":
-            //cube.position += camera.direction * 0.1;
-            let cameraDir = camera.getWorldDirection(new THREE.Vector3());
-            camera.position.copy(camera.getWorldPosition(new THREE.Vector3()).clone().add(cameraDir.multiplyScalar(0.01)))
-            //camera.position.copy(camera.position.clone().add(camera.direction.clone().multiplyScalar(0.01)));
-            break;
-        case "backward":
-            cube.position.z += 0.1;
-            camera.position.z += 0.1;
-            break;
-        case "left":
-            cube.position.x -= 0.1;
-            camera.position.x -= 0.1;
-            break;
-        case "right":
-            cube.position.x += 0.1;
-            camera.position.x += 0.1;
-            break;
-    }
-}
-
 function setupKeyLogger(cube, camera) {
     document.onkeydown = function(event) {
         let key = event.code;
         let dir = null;
         console.log(event)
         if (key === "KeyW") {
-            dir = "forward";
-            moveInUniverse(cube, camera, dir);
+            startMovingForward();
         }
         else if (key === "KeyS") {
-            dir = "backward";
-            moveInUniverse(cube, camera, dir);
+            startMovingBackward();
         }
         else if (key === "KeyA") {
-            dir = "left";
-            moveInUniverse(cube, camera, dir);
+            startMovingLeft();
         }
         else if (key === "KeyD") { 
-            dir = "right";
-            moveInUniverse(cube, camera, dir);
+            startMovingRight();
         }
         else if (key === "Space") {
             moveInUniverse(cube, camera, dir, true)
@@ -90,6 +66,22 @@ function setupKeyLogger(cube, camera) {
             rotatePlayer(cube, camera, "left");
         }
         
+    }
+
+    document.onkeyup = function(event) {
+        let key = event.code;
+        if (key === "KeyW") {
+            stopMovingForward();
+        }
+        else if (key === "KeyD") { 
+            stopMovingRight();
+        }
+        else if (key === "KeyA") {
+            stopMovingLeft();
+        }
+        else if (key === "KeyS") {
+            stopMovingBackward();
+        }
     }
 }
 

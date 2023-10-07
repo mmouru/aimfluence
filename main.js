@@ -2,7 +2,7 @@ import * as THREE from 'three';
 //import { plane } from '/plane';
 import { setupKeyLogger } from '/controls.js';
 import { hideCursorAndShowCrosshair } from '/handle_cursor.js'
-import { radians } from '/helper.js';
+import { playerMove } from '/movement.js';
 
 const scene = new THREE.Scene();
 
@@ -43,7 +43,7 @@ var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = -Math.PI / 2;
 
 /**
- * clock to handle everything
+ * clock to handle movement
  */
 const clock = new THREE.Clock();
 
@@ -87,11 +87,13 @@ var havePointerLock = 'pointerLockElement' in document ||
     'mozPointerLockElement' in document ||
     'webkitPointerLockElement' in document;
 
+
+
 document.body.addEventListener("click", async () => {
     await document.body.requestPointerLock({
         unadjustedMovement: true,
     });
-    
+    //moveForward = true;
     document.addEventListener('mousemove', mouseMoveEvent);
 });
 
@@ -114,9 +116,11 @@ scene.add( plane );
 
 camera.position.y = 2;
 
+
 function animate() {
 	requestAnimationFrame( animate );
-    console.log(lastX, lastY)
+    let delta = clock.getDelta();
+    playerMove(camera, delta);
     //console.log(camera.getWorldDirection(new THREE.Vector3()))
 	renderer.render( scene, camera );
 }

@@ -16,8 +16,11 @@ const plane = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.white)
 
 plane.rotation.x = -Math.PI / 2;
 
-const circleGeometry = new THREE.CircleGeometry(0.5, 32);
-const circle = new THREE.Mesh(circleGeometry, createPlaneMaterial(hexColors.red))
+function createCircleMesh() {
+    const circleGeometry = new THREE.CircleGeometry(0.5, 32);
+    return new THREE.Mesh(circleGeometry, createPlaneMaterial(hexColors.red))
+}
+
 circle.rotation.x = -Math.PI;
 circle.position.z += 12.4;
 circle.position.y += 7.5;
@@ -27,6 +30,13 @@ plane2.rotation.x = -Math.PI;
 plane2.rotation.z = -Math.PI;
 plane2.position.z += 12.5;
 plane2.position.y += 7.5;
+
+class ShootingTarget {
+    constructor(createTime) {
+        this.createTime = createTime;
+        this.circle = createCircleMesh();
+    }
+}
 
 let aimCircles = [circle];
 

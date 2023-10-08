@@ -39,7 +39,7 @@ const clock = new THREE.Clock();
 /**
  * direction vector and function to update looks
  */
-let sensitivity = 0.2;
+let sensitivity = 0.1;
 
 let yaw = 0;
 let pitch = 0;

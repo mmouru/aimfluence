@@ -27,9 +27,7 @@ function handleMouseClick(event) {
 }
 
 body.addEventListener("mousedown", handleMouseClick);
-/**
- * Looking around functions
- */
+
 
 
 

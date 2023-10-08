@@ -1,3 +1,5 @@
+import { fire } from "./shooting";
+import { scene, camera } from "./main";
 // Get references to the canvas and crosshair elements
 const body = document.getElementById("threejs-body");
 const crosshair = document.getElementById("crosshair");
@@ -17,7 +19,14 @@ function showCursorAndHideCrosshair() {
 // Add event listeners to the canvas
 body.addEventListener("mouseenter", hideCursorAndShowCrosshair);
 body.addEventListener("mouseleave", showCursorAndHideCrosshair);
- 
+
+function handleMouseClick(event) {
+    if (event.button == 0) {
+        fire(camera, scene);
+    }
+}
+
+body.addEventListener("mousedown", handleMouseClick);
 /**
  * Looking around functions
  */

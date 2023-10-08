@@ -28,4 +28,6 @@ plane2.rotation.z = -Math.PI;
 plane2.position.z += 12.5;
 plane2.position.y += 7.5;
 
-export { circle, plane, plane2 };
+let aimCircles = [circle];
+
+export { circle, plane, plane2, aimCircles};

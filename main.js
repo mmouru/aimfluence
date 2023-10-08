@@ -118,3 +118,5 @@ function animate() {
 hideCursorAndShowCrosshair();
 setupKeyLogger(camera);
 animate();
+
+export { scene, camera };

@@ -6,9 +6,8 @@ let moveBackward = false;
 let moveRight = false;
 let moveLeft = false;
 
-const up = new THREE.Vector3(0, 1, 0);
-
 const movementSpeed = 100.0;
+const headHeight = 2;
 
 let velocity = new THREE.Vector3();
 
@@ -44,11 +43,6 @@ export function stopMovingLeft() {
     moveLeft = false;
 }
 
-function calculateRightVector(cameraDir) {
-    const rightVector =  new THREE.Vector3();
-    return rightVector.crossVectors(cameraDir, up);
-}
-
 export function playerMove(camera, delta) {
 
     // brake movement 
@@ -62,7 +56,10 @@ export function playerMove(camera, delta) {
     if (moveRight) velocity.x += movementSpeed * delta;
     if (moveLeft) velocity.x -= movementSpeed * delta;
 
-    // move player model in space
+    // sideways
     camera.translateX( velocity.x * delta);
+    // forward
     camera.translateZ( velocity.z * delta);
+    // restrict the camera to be at head height always
+    camera.position.y = headHeight;
 }

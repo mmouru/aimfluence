@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { setupKeyLogger } from '/controls.js';
 import { hideCursorAndShowCrosshair } from '/handle_cursor.js'
 import { playerMove } from '/movement.js';
+import { plane2 } from '/aimwall.js';
 
 const scene = new THREE.Scene();
 
@@ -50,11 +51,7 @@ const clock = new THREE.Clock();
 /**
  * direction vector and function to update looks
  */
-const body = document.getElementById("threejs-body");
 let sensitivity = 0.2;
-// crosshair in middle of the screen
-let lastX = body.clientWidth / 2;
-let lastY = body.clientHeight / 2
 
 let yaw = 0;
 let pitch = 0;
@@ -113,9 +110,6 @@ direction.y = Math.sin(THREE.MathUtils.degToRad(pitch));
 
 // add plane
 scene.add( plane );
-
-camera.position.y = 2;
-
 
 function animate() {
 	requestAnimationFrame( animate );

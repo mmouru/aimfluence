@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { setupKeyLogger } from '/controls.js';
 import { hideCursorAndShowCrosshair } from '/handle_cursor.js'
 import { playerMove } from '/movement.js';
-import { plane2 } from '/aimwall.js';
+import { plane, plane2 } from '/environment.js';
 
 const scene = new THREE.Scene();
 
@@ -37,11 +37,7 @@ const cube = new THREE.Mesh( geometry, grass_material );
 cube.position.y += 0.5;
 scene.add( cube );
 
-var planeGeometry = new THREE.PlaneGeometry(25, 25); // Width and height of the plane
-var planeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // Green color
-var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
-plane.rotation.x = -Math.PI / 2;
 
 /**
  * clock to handle movement
@@ -108,8 +104,11 @@ direction.x = Math.cos(THREE.MathUtils.degToRad(yaw)) * Math.cos(THREE.MathUtils
 direction.z = Math.sin(THREE.MathUtils.degToRad(yaw)) * Math.cos(THREE.MathUtils.degToRad(pitch));
 direction.y = Math.sin(THREE.MathUtils.degToRad(pitch));
 
+
+
 // add plane
-scene.add( plane );
+scene.add( plane, plane2 );
+scene.add( plane2 );
 
 function animate() {
 	requestAnimationFrame( animate );

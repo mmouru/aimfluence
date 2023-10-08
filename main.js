@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { setupKeyLogger } from '/controls.js';
 import { hideCursorAndShowCrosshair } from '/handle_cursor.js'
 import { playerMove } from '/movement.js';
-import { plane, plane2 } from '/environment.js';
+import { plane, plane2, circle } from '/environment.js';
 
 const scene = new THREE.Scene();
 
@@ -30,14 +30,6 @@ const grass_material = new THREE.MeshBasicMaterial({ map:texture })
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
-
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-const cube = new THREE.Mesh( geometry, grass_material );
-cube.position.y += 0.5;
-scene.add( cube );
-
-
 
 /**
  * clock to handle movement
@@ -107,8 +99,8 @@ direction.y = Math.sin(THREE.MathUtils.degToRad(pitch));
 
 
 // add plane
-scene.add( plane, plane2 );
-scene.add( plane2 );
+scene.add( plane, plane2, circle );
+//scene.add( plane2 );
 
 function animate() {
 	requestAnimationFrame( animate );
@@ -124,5 +116,5 @@ function animate() {
 
 //calculateMouseMovement();
 hideCursorAndShowCrosshair();
-setupKeyLogger(cube, camera);
+setupKeyLogger(camera);
 animate();

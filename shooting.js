@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { aimCircles } from './environment';
+import { aimCircles } from './game_logic';
 
 const raycaster = new THREE.Raycaster();
 

@@ -21,23 +21,33 @@ function createCircleMesh() {
     return new THREE.Mesh(circleGeometry, createPlaneMaterial(hexColors.red))
 }
 
-circle.rotation.x = -Math.PI;
-circle.position.z += 12.4;
-circle.position.y += 7.5;
 // aim wall
-const plane2 = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.gray));
-plane2.rotation.x = -Math.PI;
-plane2.rotation.z = -Math.PI;
-plane2.position.z += 12.5;
-plane2.position.y += 7.5;
+const shootingWall = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.gray));
+shootingWall.rotation.x = -Math.PI;
+shootingWall.rotation.z = -Math.PI;
+shootingWall.position.z += 12.5;
+shootingWall.position.y += 7.5;
 
-class ShootingTarget {
+/**
+ * 
+ * @param {THREE.Mesh} target 
+ */
+function calculatePositionForTarget(target) {
+    target.rotation.x = -Math.PI;
+    target.rotation.z = -Math.PI;
+    target.position.z += 12.4;
+    target.position.y += Math.random() * 20;
+    target.position.x += Math.random() * 20;
+}
+
+export class ShootingTarget {
     constructor(createTime) {
         this.createTime = createTime;
-        this.circle = createCircleMesh();
+        this.mesh = createCircleMesh();
+        calculatePositionForTarget(this.mesh);
     }
 }
 
-let aimCircles = [circle];
 
-export { circle, plane, plane2, aimCircles};
+
+export { plane, shootingWall };

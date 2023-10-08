@@ -3,7 +3,9 @@ import * as THREE from 'three';
 import { setupKeyLogger } from '/controls.js';
 import { hideCursorAndShowCrosshair } from '/handle_cursor.js'
 import { playerMove } from '/movement.js';
-import { plane, plane2, circle } from '/environment.js';
+import { plane, shootingWall } from '/environment.js';
+import { removeMissedTargets } from './helper';
+import { aimCircles, startGame } from './game_logic';
 
 const scene = new THREE.Scene();
 
@@ -97,18 +99,22 @@ direction.z = Math.sin(THREE.MathUtils.degToRad(yaw)) * Math.cos(THREE.MathUtils
 direction.y = Math.sin(THREE.MathUtils.degToRad(pitch));
 
 
+startGame(clock, scene);
 
 // add plane
-scene.add( plane, plane2, circle );
-//scene.add( plane2 );
+scene.add( plane, shootingWall );
 
 function animate() {
 	requestAnimationFrame( animate );
+    
     let delta = clock.getDelta();
     playerMove(camera, delta);
-    //console.log(camera.getWorldDirection(new THREE.Vector3()))
+
+    removeMissedTargets(clock, scene);
 	renderer.render( scene, camera );
 }
+
+
 
 /**
  * Cuben ja kameran liikkuminen maailmassa pitää määritellä tämänhetkisen cameran posen mukaan

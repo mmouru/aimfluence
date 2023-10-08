@@ -46,9 +46,9 @@ export function stopMovingLeft() {
 export function playerMove(camera, delta) {
 
     // brake movement 
-    velocity.x -= velocity.x * 10.0 * delta;
-    velocity.y -= velocity.y * 10.0 * delta;
-    velocity.z -= velocity.z * 10.0 * delta;
+    velocity.x -= velocity.x * 13.0 * delta;
+    velocity.y -= velocity.y * 13.0 * delta;
+    velocity.z -= velocity.z * 13.0 * delta;
 
     // add movement speed to velocity
     if (moveForward) velocity.z -= movementSpeed * delta;

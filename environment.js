@@ -21,6 +21,16 @@ function createCircleMesh() {
     return new THREE.Mesh(circleGeometry, createPlaneMaterial(hexColors.red))
 }
 
+// sky box
+const skyboxSize = 1000;
+const skyboxGeo = new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize);
+
+const textureLoader = new THREE.TextureLoader();
+const textureUrls = ['/public/textures/sky_rt.jpg', '/public/textures/sky_lf.jpg', '/public/textures/sky_up.jpg', '/public/textures/sky_dn.jpg', '/public/textures/sky_ft.jpg', '/public/textures/sky_bk.jpg'];
+const skyboxMaterials = textureUrls.map(url => new THREE.MeshBasicMaterial({ map: textureLoader.load(url), side: THREE.BackSide }));
+console.log(skyboxMaterials);
+const skybox = new THREE.Mesh(skyboxGeo, skyboxMaterials);
+skybox.position.set(0,0,0);
 // aim wall
 const shootingWall = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.gray));
 shootingWall.rotation.x = -Math.PI;
@@ -50,4 +60,4 @@ export class ShootingTarget {
 
 
 
-export { plane, shootingWall };
+export { plane, shootingWall, skybox };

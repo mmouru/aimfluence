@@ -4,7 +4,7 @@ import { aimCircles } from './game_logic';
 const raycaster = new THREE.Raycaster();
 
 const shootSound = document.getElementById("shoot1");
-
+shootSound.volume = 0.1;
 let currentAudio = false;
 
 function playAudio(audioElement) {

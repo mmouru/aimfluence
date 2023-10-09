@@ -3,14 +3,14 @@ import * as THREE from 'three';
 import { setupKeyLogger } from '/controls.js';
 import { hideCursorAndShowCrosshair } from '/handle_cursor.js'
 import { playerMove } from '/movement.js';
-import { plane, shootingWall } from '/environment.js';
+import { plane, shootingWall, skybox } from '/environment';
 import { removeMissedTargets } from './helper';
 import { aimCircles, startGame } from './game_logic';
 
 const scene = new THREE.Scene();
 
 // Camera things
-const camera = new THREE.PerspectiveCamera( 74, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const camera = new THREE.PerspectiveCamera( 74, window.innerWidth / window.innerHeight, 0.1, 2000 );
 let cameraPos = new THREE.Vector3(5,2,-6);
 let cameraTarget = new THREE.Vector3(0,0,0);
 const up = new THREE.Vector3(0,1,0);
@@ -100,9 +100,9 @@ direction.y = Math.sin(THREE.MathUtils.degToRad(pitch));
 
 
 startGame(clock, scene);
-
+//camera.position.set(1200, -250, 2000);
 // add plane
-scene.add( plane, shootingWall );
+scene.add( plane, shootingWall, skybox );
 
 function animate() {
 	requestAnimationFrame( animate );

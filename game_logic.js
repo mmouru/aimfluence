@@ -13,11 +13,13 @@ export let aimCircles = [];
 export function startGame(clock, scene) {
     gameStarted = true;
     let k = 0;
-    while ( k < 11) {
+    setInterval(() => {
+        if ( k < 11) {
         const circle = new ShootingTarget(clock.getElapsedTime());
         aimCircles[k] = circle;
         scene.add(circle.mesh)
         k++;
-    }
-       
+        }
+    }, 5000);
 };
+        

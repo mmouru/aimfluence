@@ -14,11 +14,13 @@ export function fire(camera, scene) {
     if (intersects.length > 0) {
         console.log(object_ids, "no moroo");
         aimCircles.forEach(circle => {
-            console.log(circle)
-            if (object_ids.includes(circle.uuid)) {
-                scene.remove(circle);
-                circle.geometry.dispose();
-                circle.material.dispose();
+            //console.log(circle)
+            if (object_ids.includes(circle.mesh.uuid)) {
+                console.log("osui")
+                scene.remove(circle.mesh);
+                circle.mesh.geometry.dispose();
+                circle.mesh.material.dispose();
+                aimCircles.pop();
             }
         });
     }

@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    overflow: hidden; /* Prevent scrolling */
+  }
+  
+#crosshair {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 2px; /* Adjust the thickness of the lines */
+    height: 2px;
+    background-color: white; /* Change the color to white */
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Ensures it's above other content */
+}

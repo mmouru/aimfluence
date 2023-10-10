@@ -37,7 +37,7 @@ const farFogDistance = 5; // Far distance (covers the entire scene)
 
 // Create the fog object
 
-const renderer = new THREE.WebGLRenderer({antialias: false});
+const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
@@ -52,7 +52,7 @@ const clock = new THREE.Clock();
  */
 let sensitivity = 0.1;
 
-let yaw = 0;
+let yaw = 90;
 let pitch = 0;
 
 let newDirection = new THREE.Vector3();

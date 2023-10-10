@@ -4,21 +4,22 @@ const hexColors = {
     gray: 0x808080,
     white: 0xf0f0f0,
     red: 0xd32213,
-    green: 0x6a9e32
+    green: 0x6a9e32,
+    orange: 0xf37413
 }
 
-function createPlaneMaterial(hexColor) {
-    return new THREE.MeshBasicMaterial({ color: hexColor });
+function createPlaneMaterial(hexColor, transparent, opacity) {
+    return new THREE.MeshBasicMaterial({ color: hexColor, transparent: transparent, opacity: opacity });
 }
 // floor
 const planeGeometry = new THREE.PlaneGeometry(25, 25); // Width and height of the plane
-const plane = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.white));
+const plane = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.white, true, 0.5));
 
 plane.rotation.x = -Math.PI / 2;
 
 function createCircleMesh() {
     const circleGeometry = new THREE.CircleGeometry(0.5, 32);
-    return new THREE.Mesh(circleGeometry, createPlaneMaterial(hexColors.red))
+    return new THREE.Mesh(circleGeometry, createPlaneMaterial(hexColors.orange))
 }
 
 // sky box
@@ -32,11 +33,12 @@ console.log(skyboxMaterials);
 const skybox = new THREE.Mesh(skyboxGeo, skyboxMaterials);
 skybox.position.set(0,0,0);
 // aim wall
-const shootingWall = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.gray));
+const shootingWall = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.gray, true, 0.5));
 shootingWall.rotation.x = -Math.PI;
 shootingWall.rotation.z = -Math.PI;
 shootingWall.position.z += 12.5;
 shootingWall.position.y += 7.5;
+shootingWall.opacity
 
 
 

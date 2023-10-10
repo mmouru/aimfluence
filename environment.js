@@ -22,11 +22,11 @@ function createCircleMesh() {
 }
 
 // sky box
-const skyboxSize = 1000;
+const skyboxSize = 512;
 const skyboxGeo = new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize);
 
 const textureLoader = new THREE.TextureLoader();
-const textureUrls = ['/public/textures/sky_rt.jpg', '/public/textures/sky_lf.jpg', '/public/textures/sky_up.jpg', '/public/textures/sky_dn.jpg', '/public/textures/sky_ft.jpg', '/public/textures/sky_bk.jpg'];
+const textureUrls = ['/public/textures/sky_lf.jpg', '/public/textures/sky_rt.jpg', '/public/textures/sky_up.jpg', '/public/textures/sky_dn.jpg', '/public/textures/sky_ft.jpg', '/public/textures/sky_bk.jpg'];
 const skyboxMaterials = textureUrls.map(url => new THREE.MeshBasicMaterial({ map: textureLoader.load(url), side: THREE.BackSide }));
 console.log(skyboxMaterials);
 const skybox = new THREE.Mesh(skyboxGeo, skyboxMaterials);
@@ -37,6 +37,8 @@ shootingWall.rotation.x = -Math.PI;
 shootingWall.rotation.z = -Math.PI;
 shootingWall.position.z += 12.5;
 shootingWall.position.y += 7.5;
+
+
 
 /**
  * 

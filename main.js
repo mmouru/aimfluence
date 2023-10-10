@@ -29,7 +29,16 @@ const texture = new THREE.TextureLoader().load('grass_texture.jpg');
 
 const grass_material = new THREE.MeshBasicMaterial({ map:texture })
 
-const renderer = new THREE.WebGLRenderer();
+// Fog 
+
+const fogColor = 0x000000; // Fog color
+const nearFogDistance = 1; // Near distance (just above ground)
+const farFogDistance = 5; // Far distance (covers the entire scene)
+
+// Create the fog object
+
+const renderer = new THREE.WebGLRenderer({antialias: false});
+renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
@@ -102,11 +111,11 @@ direction.y = Math.sin(THREE.MathUtils.degToRad(pitch));
 startGame(clock, scene);
 //camera.position.set(1200, -250, 2000);
 // add plane
-scene.add( plane, shootingWall, skybox );
+scene.add( plane, shootingWall, skybox);
 
 function animate() {
 	requestAnimationFrame( animate );
-    
+    //updateFog();
     let delta = clock.getDelta();
     playerMove(camera, delta);
 

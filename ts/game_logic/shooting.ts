@@ -3,11 +3,11 @@ import { aimCircles } from './game_logic';
 
 const raycaster = new THREE.Raycaster();
 
-const shootSound = document.getElementById("shoot1");
+const shootSound = document.getElementById("shoot1") as HTMLAudioElement;;
 shootSound.volume = 0.1;
-let currentAudio = false;
+let currentAudio: HTMLAudioElement | undefined = undefined;
 
-function playAudio(audioElement) {
+function playAudio(audioElement: HTMLAudioElement) {
     if (currentAudio) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
@@ -16,7 +16,7 @@ function playAudio(audioElement) {
     audioElement.play();
 };
 
-export function fire(camera, scene) {
+export function fire(camera : THREE.Camera, scene: THREE.Scene) {
     const origin = camera.position;
     const direction = camera.getWorldDirection(new THREE.Vector3());
 
@@ -27,13 +27,11 @@ export function fire(camera, scene) {
     const intersects = raycaster.intersectObjects(scene.children);
     const object_ids = intersects.map(intersect => intersect.object.uuid);
     if (intersects.length > 0) {
-        console.log(object_ids, "no moroo");
         aimCircles.forEach(circle => {
             //console.log(circle)
             if (object_ids.includes(circle.mesh.uuid)) {
                 scene.remove(circle.mesh);
                 circle.mesh.geometry.dispose();
-                circle.mesh.material.dispose();
                 aimCircles.pop();
             }
         });

@@ -8,7 +8,7 @@ const hexColors = {
     orange: 0xf37413
 }
 
-function createPlaneMaterial(hexColor, transparent, opacity) {
+function createPlaneMaterial(hexColor: number, transparent?: boolean, opacity?: number) {
     return new THREE.MeshBasicMaterial({ color: hexColor, transparent: transparent, opacity: opacity });
 }
 // floor
@@ -38,9 +38,6 @@ shootingWall.rotation.x = -Math.PI;
 shootingWall.rotation.z = -Math.PI;
 shootingWall.position.z += 12.5;
 shootingWall.position.y += 7.5;
-shootingWall.opacity
-
-
 
 /**
  * 
@@ -55,13 +52,13 @@ function calculatePositionForTarget(target) {
 }
 
 export class ShootingTarget {
-    constructor(createTime) {
+    public createTime: number;
+    public mesh: THREE.Mesh;
+    constructor(createTime: number) {
         this.createTime = createTime;
         this.mesh = createCircleMesh();
         calculatePositionForTarget(this.mesh);
     }
 }
-
-
 
 export { plane, shootingWall, skybox };

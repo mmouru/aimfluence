@@ -4,12 +4,19 @@
 		<meta charset="utf-8">
 		<title>My first three.js app</title>
         <link rel="stylesheet" href="css/styles.css">
+		<script src="./helper.js"></script>
 		<style>
 		</style>
 	</head>
 	    <body id="threejs-body">
-            <div id="crosshair"></div>
-		<script type="module" src="/main.js"></script>
+		<div class="message-box">
+			<div class="close-button" onclick="closeMessageBox()">&#10006;</div>
+			<div class="message-content">
+				<p>This is your message content. You can put any text or content here.</p>
+			</div>
+		</div>
+        <div id="crosshair"></div>
+		<script type="module" src="/main.ts"></script>
         <audio id="shoot1">
             <source src="/sounds/sound1.mp3" type="audio/mpeg">
             Your browser does not support the audio element.

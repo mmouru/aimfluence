@@ -1,8 +1,8 @@
 import { fire } from "../game_logic/shooting";
 import { scene, camera } from "../../main";
 // Get references to the canvas and crosshair elements
-const body = document.getElementById("threejs-body");
-const crosshair = document.getElementById("crosshair");
+const body = document.getElementById("threejs-body")!;
+const crosshair = document.getElementById("crosshair")!;
 
 // Function to hide the cursor and show the crosshair
 function hideCursorAndShowCrosshair() {

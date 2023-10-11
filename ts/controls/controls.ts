@@ -10,12 +10,8 @@ import {
     stopMovingBackward,
 } from './movement';
 
-/**
- * 
- * @param {*} cube 
- * @param {*} camera 
- */
-export function setupKeyLogger(cube, camera) {
+
+export function setupKeyLogger() {
     document.onkeydown = function(event) {
         let key = event.code;
         console.log(event)
@@ -31,6 +27,7 @@ export function setupKeyLogger(cube, camera) {
         else if (key === "KeyD") { 
             startMovingRight();
         } 
+        //else if (key ===)
     }
 
     document.onkeyup = function(event) {

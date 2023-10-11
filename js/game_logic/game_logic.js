@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { ShootingTarget, shootingWall } from './environment';
+import { ShootingTarget, shootingWall } from '../models/environment';
 
 let gameStarted = false;
 

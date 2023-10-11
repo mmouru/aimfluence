@@ -1,5 +1,5 @@
-import { fire } from "./shooting";
-import { scene, camera } from "./main";
+import { fire } from "../game_logic/shooting";
+import { scene, camera } from "../../main";
 // Get references to the canvas and crosshair elements
 const body = document.getElementById("threejs-body");
 const crosshair = document.getElementById("crosshair");

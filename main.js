@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 //import { plane } from '/plane';
-import { setupKeyLogger } from '/controls.js';
-import { hideCursorAndShowCrosshair } from '/handle_cursor.js'
-import { playerMove } from '/movement.js';
-import { plane, shootingWall, skybox } from '/environment';
+import { setupKeyLogger } from '/js/controls/controls.js';
+import { hideCursorAndShowCrosshair } from '/js/controls/handle_cursor.js'
+import { playerMove } from '/js/controls/movement.js';
+import { plane, shootingWall, skybox } from '/js/models/environment';
 import { removeMissedTargets } from './helper';
-import { aimCircles, startGame } from './game_logic';
+import { aimCircles, startGame } from './js/game_logic/game_logic';
 
 const scene = new THREE.Scene();
 

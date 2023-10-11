@@ -1,6 +1,6 @@
 
 import * as THREE from 'three';
-import { aimCircles } from './game_logic';
+import { aimCircles } from './js/game_logic/game_logic';
 
 const deleteMeshAfterTime = 5.0;
 

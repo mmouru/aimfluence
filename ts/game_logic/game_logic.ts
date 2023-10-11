@@ -1,6 +1,6 @@
 //import * as THREE from 'three';
 import { ShootingTarget, shootingWall } from '../models/environment';
-
+import { mouseMoveEvent } from '../controls/handle_cursor';
 let gameStarted = false;
 // force pointerlock when opening game first time
 //document.body.requestPointerLock();
@@ -8,12 +8,15 @@ let gameStarted = false;
 export let aimCircles: ShootingTarget[] = [];
 
 document.addEventListener("pointerlockchange", lockChangeAlert, false);
+const settingsDiv = document.querySelector('#settings') as HTMLDivElement;
 
 function lockChangeAlert () {
     if (document.pointerLockElement === document.body) {
         document.addEventListener('mousemove', mouseMoveEvent);
+        settingsDiv.style.display = 'none';
     } else {
-        console.log("moro")
+        document.removeEventListener('mousemove', mouseMoveEvent);
+        settingsDiv.style.display = 'block';
     }
 }
 

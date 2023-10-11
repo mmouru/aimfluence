@@ -26,8 +26,11 @@ export function setupKeyLogger() {
         }
         else if (key === "KeyD") { 
             startMovingRight();
-        } 
-        //else if (key ===)
+        }
+        // keycode 27
+        else if (key === "Escape") {
+            
+        }
     }
 
     document.onkeyup = function(event) {

@@ -13,3 +13,25 @@ body {
     transform: translate(-50%, -50%);
     z-index: 9999; /* Ensures it's above other content */
 }
+
+.message-box {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: relative;
+  max-width: 300px;
+  padding: 20px;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #777;
+}
+
+.message-content {
+  text-align: center;
+}

@@ -5,5 +5,5 @@ export settings = {
     sounds: true,
     skyboxTextures: null,
     crosshairColor: 
-
+    hitsounds: false,
 }

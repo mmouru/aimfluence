@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 //import { plane } from '/plane';
-import { setupKeyLogger } from '/js/controls/controls.js';
-import { hideCursorAndShowCrosshair } from '/js/controls/handle_cursor.js'
-import { playerMove } from '/js/controls/movement.js';
-import { plane, shootingWall, skybox } from '/js/models/environment';
+import { setupKeyLogger } from './ts/controls/controls.js';
+import { hideCursorAndShowCrosshair } from './ts/controls/handle_cursor.js'
+import { playerMove } from './ts/controls/movement.js';
+import { plane, shootingWall, skybox } from './ts/models/environment';
 import { removeMissedTargets } from './helper';
-import { aimCircles, startGame } from './js/game_logic/game_logic';
+import { aimCircles, startGame } from './ts/game_logic/game_logic';
 
 const scene = new THREE.Scene();
 
@@ -19,23 +19,8 @@ cameraDir.normalize();
 
 let cameraRight = new THREE.Vector3().crossVectors(up, cameraDir).normalize();
 
-let cameraUp = new THREE.Vector3().crossVectors(cameraDir, cameraRight);
-
 camera.position.copy(cameraPos);
-
 camera.rotation.x -= Math.PI / 180;
-
-const texture = new THREE.TextureLoader().load('grass_texture.jpg');
-
-const grass_material = new THREE.MeshBasicMaterial({ map:texture })
-
-// Fog 
-
-const fogColor = 0x000000; // Fog color
-const nearFogDistance = 1; // Near distance (just above ground)
-const farFogDistance = 5; // Far distance (covers the entire scene)
-
-// Create the fog object
 
 const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
@@ -83,15 +68,25 @@ var havePointerLock = 'pointerLockElement' in document ||
     'mozPointerLockElement' in document ||
     'webkitPointerLockElement' in document;
 
+const deleteMeshAfterTime = 5.0;
 
+function removeMissedTargets(clock, scene) {
+    const timeNow = clock.getElapsedTime();
+    aimCircles.forEach(circle => {
+        if(timeNow - circle.createTime > deleteMeshAfterTime) {
+            // remove circle from render
+            scene.remove(circle.mesh);
+            // discard mesh buffers from memory;
+            circle.mesh.geometry.dispose();
+        }
+    });
+}
 
 document.body.addEventListener("click", async () => {
-    await document.body.requestPointerLock({
-        unadjustedMovement: true,
-    });
-    //moveForward = true;
-    document.addEventListener('mousemove', mouseMoveEvent);
+    
+    
 });
+
 
 window.addEventListener('resize', () => {
     const newWidth = window.innerWidth;
@@ -109,13 +104,11 @@ direction.y = Math.sin(THREE.MathUtils.degToRad(pitch));
 
 
 startGame(clock, scene);
-//camera.position.set(1200, -250, 2000);
-// add plane
+
 scene.add( plane, shootingWall, skybox);
 
 function animate() {
 	requestAnimationFrame( animate );
-    //updateFog();
     let delta = clock.getDelta();
     playerMove(camera, delta);
 
@@ -131,7 +124,7 @@ function animate() {
 
 //calculateMouseMovement();
 hideCursorAndShowCrosshair();
-setupKeyLogger(camera);
+setupKeyLogger();
 animate();
 
 export { scene, camera };

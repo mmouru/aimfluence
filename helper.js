@@ -1,22 +1,16 @@
-
-import * as THREE from 'three';
-import { aimCircles } from './js/game_logic/game_logic';
-
-const deleteMeshAfterTime = 5.0;
-
+"use strict";
+exports.__esModule = true;
+exports.closeMessageBox = exports.removeMissedTargets = void 0;
+var game_logic_1 = require("./ts/game_logic/game_logic");
+var deleteMeshAfterTime = 5.0;
 /**
- * 
- * @param {THREE.clock} clock 
+ *
+ * @param {THREE.clock} clock
  */
-export function removeMissedTargets(clock, scene) {
-    const timeNow = clock.getElapsedTime();
-    aimCircles.forEach(circle => {
-        if(timeNow - circle.createTime > deleteMeshAfterTime) {
-            // remove circle from render
-            scene.remove(circle.mesh);
-            // discard mesh buffers from memory;
-            circle.mesh.geometry.dispose();
-            circle.mesh.material.dispose();
-        }
-    });
+
+exports.removeMissedTargets = removeMissedTargets;
+function closeMessageBox() {
+    var messageBox = document.querySelector('.message-box');
+    messageBox.style.display = 'none';
 }
+exports.closeMessageBox = closeMessageBox;

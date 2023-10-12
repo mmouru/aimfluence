@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { currentSettings, SkyboxTexture } from '../game_logic/settings';
 
 const hexColors = {
     gray: 0x808080,
@@ -22,15 +23,47 @@ function createCircleMesh() {
     return new THREE.Mesh(circleGeometry, createPlaneMaterial(hexColors.orange))
 }
 
+
+
 // sky box
 const skyboxSize = 512;
 const skyboxGeo = new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize);
 
 const textureLoader = new THREE.TextureLoader();
-const textureUrls = ['/public/textures/sky_lf.jpg', '/public/textures/sky_rt.jpg', '/public/textures/sky_up.jpg', '/public/textures/sky_dn.jpg', '/public/textures/sky_ft.jpg', '/public/textures/sky_bk.jpg'];
-const skyboxMaterials = textureUrls.map(url => new THREE.MeshBasicMaterial({ map: textureLoader.load(url), side: THREE.BackSide }));
-console.log(skyboxMaterials);
-const skybox = new THREE.Mesh(skyboxGeo, skyboxMaterials);
+const spaceTextureUrls = [
+                            '/public/textures/sky_lf.jpg',
+                            '/public/textures/sky_rt.jpg',
+                            '/public/textures/sky_up.jpg',
+                            '/public/textures/sky_dn.jpg',
+                            '/public/textures/sky_ft.jpg',
+                            '/public/textures/sky_bk.jpg',
+                        ];
+
+const blackTexture = spaceTextureUrls.map(txt => new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide }));
+
+const spaceSkyboxMaterial = spaceTextureUrls.map(url => new THREE.MeshBasicMaterial({ map: textureLoader.load(url), side: THREE.BackSide }));
+
+let skyboxMaterial = spaceSkyboxMaterial;
+
+let skybox = new THREE.Mesh(skyboxGeo, skyboxMaterial);
+
+/**
+ * Update skybox geometrys textures during rendering
+ * @param texture Unique texture defined in settings
+ */
+export function changeSkyBoxTexture(texture: SkyboxTexture) {
+    switch(texture) {
+        case("space"):
+            skybox.material = spaceSkyboxMaterial;
+            break;
+        case("black"):
+            skybox.material = blackTexture;
+            break;
+    }
+}
+
+
+
 skybox.position.set(0,0,0);
 // aim wall
 const shootingWall = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.gray, true, 0.5));

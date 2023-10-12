@@ -43,7 +43,7 @@ export function stopMovingLeft() {
     moveLeft = false;
 }
 
-export function playerMove(camera, delta) {
+export function playerMove(camera: THREE.Camera, delta: number) {
 
     // brake movement 
     velocity.x -= velocity.x * 13.0 * delta;

@@ -1,6 +1,7 @@
 import { fire } from "../game_logic/shooting";
 import { scene, camera } from "../../main";
 import * as THREE from 'three';
+import { currentSettings } from "../game_logic/settings";
 // Get references to the canvas and crosshair elements
 const body = document.getElementById("threejs-body")!;
 const crosshair = document.getElementById("crosshair")!;
@@ -19,7 +20,7 @@ function showCursorAndHideCrosshair() {
 
 let yaw = 90;
 let pitch = 0;
-let sensitivity = 0.1;
+
 let newDirection = new THREE.Vector3();
 
 // first time run to get orientation 
@@ -34,8 +35,10 @@ export function mouseMoveEvent(event) {
     let deltaX = event.movementX || 0;
     let deltaY = event.movementY || 0;
     
-    yaw += deltaX * sensitivity;
-    pitch -= deltaY * sensitivity;
+    yaw += deltaX * currentSettings.sensitivity / 10;
+    pitch -= deltaY * currentSettings.sensitivity / 10;
+
+    // MUST MAKE YAW MAX SETTING HERE
 
     newDirection.x = Math.cos(THREE.MathUtils.degToRad(yaw)) * 
                      Math.cos(THREE.MathUtils.degToRad(pitch));
@@ -49,7 +52,8 @@ export function mouseMoveEvent(event) {
 };
 
 function handleMouseClick(event) {
-    if (event.button == 0) {
+    const canShoot = document.pointerLockElement === document.body;
+    if (canShoot && event.button == 0) {
         fire(camera, scene);
     }
 }

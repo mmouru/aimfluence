@@ -5,6 +5,7 @@ import { hideCursorAndShowCrosshair } from './ts/controls/handle_cursor.js'
 import { playerMove } from './ts/controls/movement.js';
 import { plane, shootingWall, skybox } from './ts/models/environment';
 import { aimCircles, startGame } from './ts/game_logic/game_logic';
+import { currentSettings } from './ts/game_logic/settings.js';
 
 const scene = new THREE.Scene();
 
@@ -39,10 +40,10 @@ const clock = new THREE.Clock();
 var havePointerLock = 'pointerLockElement' in document ||
     'mozPointerLockElement' in document ||
     'webkitPointerLockElement' in document;
-
+console.log(currentSettings);
 const deleteMeshAfterTime = 5.0;
 
-function removeMissedTargets(clock, scene) {
+function removeMissedTargets(clock: THREE.Clock, scene: THREE.Scene) {
     const timeNow = clock.getElapsedTime();
     aimCircles.forEach(circle => {
         if(timeNow - circle.createTime > deleteMeshAfterTime) {
@@ -54,12 +55,6 @@ function removeMissedTargets(clock, scene) {
     });
 }
 
-document.body.addEventListener("click", async () => {
-    
-    
-});
-
-
 window.addEventListener('resize', () => {
     const newWidth = window.innerWidth;
     const newHeight = window.innerHeight;
@@ -67,7 +62,6 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(newWidth, newHeight);
   });
-
 
 
 startGame(clock, scene);
@@ -78,7 +72,7 @@ function animate() {
 	requestAnimationFrame( animate );
     let delta = clock.getDelta();
     playerMove(camera, delta);
-
+    
     removeMissedTargets(clock, scene);
 	renderer.render( scene, camera );
 }
@@ -94,4 +88,4 @@ hideCursorAndShowCrosshair();
 setupKeyLogger();
 animate();
 
-export { scene, camera };
+export { scene, camera, clock };

@@ -18,11 +18,11 @@ const plane = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.white,
 
 plane.rotation.x = -Math.PI / 2;
 
-function createCircleMesh() {
-    const circleGeometry = new THREE.CircleGeometry(0.5, 32);
-    return new THREE.Mesh(circleGeometry, createPlaneMaterial(hexColors.orange))
+function createSphereMesh() {
+    const geometry = new THREE.SphereGeometry( 1, 32, 16 ); 
+    return new THREE.Mesh(geometry, createPlaneMaterial(hexColors.orange))
 }
-
+    
 
 
 // sky box
@@ -31,12 +31,12 @@ const skyboxGeo = new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize);
 
 const textureLoader = new THREE.TextureLoader();
 const spaceTextureUrls = [
-                            '/public/textures/sky_lf.jpg',
-                            '/public/textures/sky_rt.jpg',
-                            '/public/textures/sky_up.jpg',
-                            '/public/textures/sky_dn.jpg',
-                            '/public/textures/sky_ft.jpg',
-                            '/public/textures/sky_bk.jpg',
+                            '/assets/textures/sky_lf.jpg',
+                            '/assets/textures/sky_rt.jpg',
+                            '/assets/textures/sky_up.jpg',
+                            '/assets/textures/sky_dn.jpg',
+                            '/assets/textures/sky_ft.jpg',
+                            '/assets/textures/sky_bk.jpg',
                         ];
 
 const blackTexture = spaceTextureUrls.map(txt => new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide }));
@@ -65,12 +65,6 @@ export function changeSkyBoxTexture(texture: SkyboxTexture) {
 
 
 skybox.position.set(0,0,0);
-// aim wall
-const shootingWall = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.gray, true, 0.5));
-shootingWall.rotation.x = -Math.PI;
-shootingWall.rotation.z = -Math.PI;
-shootingWall.position.z += 12.5;
-shootingWall.position.y += 7.5;
 
 /**
  * 
@@ -89,7 +83,7 @@ export class ShootingTarget {
     public mesh: THREE.Mesh;
     constructor(createTime: number) {
         this.createTime = createTime;
-        this.mesh = createCircleMesh();
+        this.mesh = createSphereMesh();
         calculatePositionForTarget(this.mesh);
     }
 }

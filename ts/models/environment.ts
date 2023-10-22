@@ -12,6 +12,10 @@ const hexColors = {
 function createPlaneMaterial(hexColor: number, transparent?: boolean, opacity?: number) {
     return new THREE.MeshBasicMaterial({ color: hexColor, transparent: transparent, opacity: opacity });
 }
+
+function createPhongMaterial(hexColor: number) {
+    return new THREE.MeshPhongMaterial({color: hexColor, shininess: 60, specular: 0x00139E})
+}
 // floor
 const planeGeometry = new THREE.PlaneGeometry(25, 25); // Width and height of the plane
 const plane = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.white, true, 0.5));
@@ -20,7 +24,9 @@ plane.rotation.x = -Math.PI / 2;
 
 function createSphereMesh() {
     const geometry = new THREE.SphereGeometry( 1, 32, 16 ); 
-    return new THREE.Mesh(geometry, createPlaneMaterial(hexColors.orange))
+    const sphere = new THREE.Mesh(geometry, createPhongMaterial(hexColors.orange))
+    sphere.castShadow = true;
+    return sphere;
 }
     
 
@@ -73,19 +79,19 @@ skybox.position.set(0,0,0);
 function calculatePositionForTarget(target) {
     target.rotation.x = -Math.PI;
     target.rotation.z = -Math.PI;
-    target.position.z += 12.4;
-    target.position.y += Math.random() * 20;
-    target.position.x += Math.random() * 20;
+    target.position.z += 13;
+    target.position.y += Math.floor(Math.random() * (13)) + 3;;
+    target.position.x += Math.random() * 11;
 }
 
 export class ShootingTarget {
-    public createTime: number;
+    public createTime: number | undefined;
     public mesh: THREE.Mesh;
-    constructor(createTime: number) {
-        this.createTime = createTime;
+    constructor(createTime?: number) {
+        this.createTime = createTime || undefined;
         this.mesh = createSphereMesh();
         calculatePositionForTarget(this.mesh);
     }
 }
 
-export { plane, shootingWall, skybox };
+export { plane, skybox };

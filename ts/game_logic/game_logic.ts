@@ -1,5 +1,5 @@
 //import * as THREE from 'three';
-import { ShootingTarget, shootingWall } from '../models/environment';
+import { ShootingTarget } from '../models/environment';
 import { mouseMoveEvent } from '../controls/handle_cursor';
 let gameStarted = false;
 // force pointerlock when opening game first time
@@ -18,7 +18,17 @@ function lockChangeAlert () {
         document.removeEventListener('mousemove', mouseMoveEvent);
         settingsDiv.style.display = 'block';
     }
-}
+};
+
+export function startBasicGame(clock: THREE.Clock, scene: THREE.Scene) {
+    gameStarted = true;
+    // init three spheres
+    for( let i = 0; i < 3; i++) {
+        const sphere = new ShootingTarget();
+        aimCircles.push(sphere);
+        scene.add(sphere.mesh);
+    };
+};
 
 export function startGame(clock: THREE.Clock, scene: THREE.Scene) {
     gameStarted = true;

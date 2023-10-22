@@ -7,7 +7,7 @@ let moveRight = false;
 let moveLeft = false;
 
 const movementSpeed = 100.0;
-const headHeight = 2;
+const headHeight = 4;
 
 let velocity = new THREE.Vector3();
 

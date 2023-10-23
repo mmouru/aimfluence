@@ -10,7 +10,6 @@ import {
     stopMovingBackward,
 } from './movement';
 
-
 export function setupKeyLogger() {
     document.onkeydown = function(event) {
         let key = event.code;
@@ -26,8 +25,7 @@ export function setupKeyLogger() {
         }
         else if (key === "KeyD") { 
             startMovingRight();
-        } 
-        //else if (key ===)
+        }
     }
 
     document.onkeyup = function(event) {

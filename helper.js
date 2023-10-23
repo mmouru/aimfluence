@@ -1,16 +1,25 @@
 "use strict";
 exports.__esModule = true;
-exports.closeMessageBox = exports.removeMissedTargets = void 0;
-var game_logic_1 = require("./ts/game_logic/game_logic");
-var deleteMeshAfterTime = 5.0;
-/**
- *
- * @param {THREE.clock} clock
- */
-
-exports.removeMissedTargets = removeMissedTargets;
+var settings_1 = require("./ts/game_logic/settings.js");
 function closeMessageBox() {
     var messageBox = document.querySelector('.message-box');
     messageBox.style.display = 'none';
+    document.body.requestPointerLock();
 }
-exports.closeMessageBox = closeMessageBox;
+function closeSettings() {
+    var settingsDiv = document.querySelector('#settings');
+    settingsDiv.style.display = 'none';
+    document.body.requestPointerLock();
+}
+function handleSkyChange() {
+    var selectElement = document.getElementById("sky");
+    var selectedValue = selectElement.value;
+    switch (selectedValue) {
+        case "space":
+            settings_1.currentSettings.skyboxTextures = settings_1.SkyboxTexture.Space;
+            break;
+        case "black":
+            settings_1.currentSettings.skyboxTextures = settings_1.SkyboxTexture.Black;
+            break;
+    }
+}

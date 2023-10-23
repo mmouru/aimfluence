@@ -7,7 +7,7 @@ let moveRight = false;
 let moveLeft = false;
 
 const movementSpeed = 100.0;
-const headHeight = 2;
+const headHeight = 4;
 
 let velocity = new THREE.Vector3();
 
@@ -43,7 +43,7 @@ export function stopMovingLeft() {
     moveLeft = false;
 }
 
-export function playerMove(camera, delta) {
+export function playerMove(camera: THREE.Camera, delta: number) {
 
     // brake movement 
     velocity.x -= velocity.x * 13.0 * delta;

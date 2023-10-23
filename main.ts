@@ -8,6 +8,7 @@ import { aimCircles, stopGame, gameStarted, gameStartTime } from './ts/game_logi
 import { currentSettings } from './ts/game_logic/settings.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { textMesh } from './ts/models/text_models.js';
+import { crosshair } from './ts/models/crosshair.js';
 
 const scene = new THREE.Scene();
 
@@ -146,9 +147,35 @@ window.addEventListener('resize', () => {
   });
 
 
+
+
+
+
+
+
+
+  const reticleMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+  const reticlePosition = new THREE.Vector3();
+  // 2. Define the reticle's positions
+  const lineLength = 0.3; // Adjust the length of the lines as needed
+  const reticleGeometry = new THREE.BufferGeometry();
+  const positions = new Float32Array([
+    0, lineLength, 0,
+    0, -lineLength, 0,
+    lineLength, 0, 0,
+    -lineLength, 0, 0,
+    0, 0, 0, // Add a central point (optional)
+  ]);
+  reticleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  
+  // 3. Create the reticle object and add it to the scene
+  const reticle = new THREE.LineSegments(reticleGeometry, reticleMaterial);
+  reticle.position.y += 5
+
 //startBasicGame(clock, scene);
 textMesh.position.y += 5;
-scene.add( plane, skybox, light, startingCircle, textMesh );
+crosshair.position.y += 5;
+scene.add( plane, skybox, light, startingCircle, reticle );
 
 function animate() {
 	requestAnimationFrame( animate );
@@ -156,6 +183,11 @@ function animate() {
     mixer.update(delta);
     playerMove(camera, delta);
     
+    camera.getWorldDirection(reticlePosition);
+    reticlePosition.multiplyScalar(15);
+    reticlePosition.add(camera.position);
+    reticle.position.copy(reticlePosition);
+    reticle.lookAt(camera.position);
     if (gameStarted) {
         if (clock.getElapsedTime() - gameStartTime >= 30) {
             stopGame(scene);

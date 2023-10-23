@@ -1,9 +1,11 @@
 //import * as THREE from 'three';
 import { ShootingTarget } from '../models/environment';
 import { mouseMoveEvent } from '../controls/handle_cursor';
-import { score, setZeroScore } from './shooting';
+import { score, resetStats } from './shooting';
 import { startingCircle } from '../models/environment';
+
 export let gameStarted = false;
+
 // force pointerlock when opening game first time
 //document.body.requestPointerLock();
 
@@ -55,10 +57,9 @@ export function stopGame(scene: THREE.Scene) {
     // update hiscore if new one is made and set points back to zero
     if (score > hiscore) {
         hiscore = score;
-        setZeroScore();
         // displaySerpentine();
     };
-    
+    resetStats();
     startingCircle.visible = true;
     // display startgame and hiscore in cube
 

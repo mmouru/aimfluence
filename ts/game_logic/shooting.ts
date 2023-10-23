@@ -20,10 +20,11 @@ const shootSound = document.getElementById("shoot1") as HTMLAudioElement;;
 shootSound.volume = 0.1;
 let currentAudio: HTMLAudioElement | undefined = undefined;
 
-
-export function setZeroScore() {
+export function resetStats() {
+    hits = 0;
+    shots = 0;
     score = 0;
-};
+}
 
 function updateAccuracy() {
     if (shots === 0) {

@@ -68,6 +68,12 @@ export function changeSkyBoxTexture(texture: SkyboxTexture) {
     }
 }
 
+const circleGeometry = new THREE.CircleGeometry(3, 25);
+const startingCircle = new THREE.Mesh(circleGeometry, createPlaneMaterial(hexColors.green));
+startingCircle.rotation.y += (Math.PI / 180) * 180;
+startingCircle.position.z += 12.5;
+startingCircle.position.y += 8;
+
 
 
 skybox.position.set(0,0,0);
@@ -94,4 +100,4 @@ export class ShootingTarget {
     }
 }
 
-export { plane, skybox };
+export { plane, skybox, startingCircle };

@@ -3,10 +3,11 @@ import * as THREE from 'three';
 import { setupKeyLogger } from './ts/controls/controls.js';
 import { hideCursorAndShowCrosshair } from './ts/controls/handle_cursor.js'
 import { playerMove } from './ts/controls/movement.js';
-import { plane, skybox } from './ts/models/environment';
-import { aimCircles, startGame, startBasicGame } from './ts/game_logic/game_logic';
+import { plane, skybox, startingCircle } from './ts/models/environment';
+import { aimCircles, stopGame, gameStarted, gameStartTime } from './ts/game_logic/game_logic';
 import { currentSettings } from './ts/game_logic/settings.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { textMesh } from './ts/models/text_models.js';
 
 const scene = new THREE.Scene();
 
@@ -58,9 +59,10 @@ loader.load('assets/bin/room.glb', function (gltf) {
 
 let sparkModel: THREE.Group<THREE.Object3DEventMap>;
 let sparkAnimations: THREE.AnimationClip[];
-let mixer: any;
+//
+let mixer = new THREE.AnimationMixer(camera);
 
-loader.load('../../assets/bin/spark.glb', function(gltf) {
+loader.load('../../assets/bin/spark_mini.glb', function(gltf) {
     sparkModel = gltf.scene;
     sparkModel.scale.set(1.5,1.5,1.5)
     mixer = new THREE.AnimationMixer(sparkModel);
@@ -75,31 +77,32 @@ loader.load('../../assets/bin/spark.glb', function(gltf) {
      });
 });
 
-function createSparkAnimation(locationX: number = 0, locationY: number = 0, locationZ: number = 0) {
+function createSparkAnimation(locationX: number = 0, locationY: number = 0, locationZ: number = 0, normal: THREE.Vector3) {
     const newSpark = new THREE.Group<THREE.Object3DEventMap>;
     newSpark.copy(sparkModel);
     mixer = new THREE.AnimationMixer(newSpark);
-
-    mixer.addEventListener( 'finished', ( event: any ) => {
-        // last action
-        if (event.action._clip.name === "Cylinder.005Action") {
-            scene.remove(newSpark);
-        }
-    });
+    console.log(normal)
 
     newSpark.position.set(locationX, locationY, locationZ);
-    // rotaatio kameraa kohti
-    newSpark.lookAt(camera.position);
-    let randomNumber = Math.random();
-    newSpark.rotateY(randomNumber);
-    newSpark.rotateX(-randomNumber);
-
+    newSpark.rotateOnAxis(normal, 90);
     scene.add(newSpark);
     for(let i = 0; i < 5; i++) {
-        mixer.clipAction(sparkAnimations[i]).setLoop(THREE.LoopOnce).play();
+        mixer.clipAction(sparkAnimations[i]).setLoop(THREE.LoopOnce, 1).play();
     }
-    
+    setTimeout(() => {
+        scene.remove(newSpark);
+        newSpark.children.forEach(child => {
+            if (child instanceof THREE.Mesh) {
+                // Dispose of Mesh-related resources
+                child.geometry.dispose();
+                child.material.dispose();
+              }
+        });
+    }, 200)
 }
+
+
+
 
 const light = new THREE.AmbientLight( 0x404040, 30);
 
@@ -132,19 +135,7 @@ var havePointerLock = 'pointerLockElement' in document ||
     'mozPointerLockElement' in document ||
     'webkitPointerLockElement' in document;
 console.log(currentSettings);
-const deleteMeshAfterTime = 5.0;
 
-function removeMissedTargets(clock: THREE.Clock, scene: THREE.Scene) {
-    const timeNow = clock.getElapsedTime();
-    aimCircles.forEach(circle => {
-        if(timeNow - circle.createTime > deleteMeshAfterTime) {
-            // remove circle from render
-            scene.remove(circle.mesh);
-            // discard mesh buffers from memory;
-            circle.mesh.geometry.dispose();
-        }
-    });
-}
 
 window.addEventListener('resize', () => {
     const newWidth = window.innerWidth;
@@ -155,9 +146,9 @@ window.addEventListener('resize', () => {
   });
 
 
-startBasicGame(clock, scene);
-
-scene.add( plane, skybox, light );
+//startBasicGame(clock, scene);
+textMesh.position.y += 5;
+scene.add( plane, skybox, light, startingCircle, textMesh );
 
 function animate() {
 	requestAnimationFrame( animate );
@@ -165,7 +156,12 @@ function animate() {
     mixer.update(delta);
     playerMove(camera, delta);
     
-    //removeMissedTargets(clock, scene);
+    if (gameStarted) {
+        if (clock.getElapsedTime() - gameStartTime >= 30) {
+            stopGame(scene);
+        }
+    }
+    
 	renderer.render( scene, camera );
 }
 

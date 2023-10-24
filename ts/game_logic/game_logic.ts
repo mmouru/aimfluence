@@ -62,5 +62,4 @@ export function stopGame(scene: THREE.Scene) {
     resetStats();
     startingCircle.visible = true;
     // display startgame and hiscore in cube
-
-}
+};

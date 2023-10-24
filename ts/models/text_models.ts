@@ -19,4 +19,3 @@ const textMesh = new THREE.Mesh(textGeometry, material);
 console.log(textMesh)
 
 export { textMesh };
-

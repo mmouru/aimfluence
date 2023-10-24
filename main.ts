@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 //import { plane } from '/plane';
 import { setupKeyLogger } from './ts/controls/controls.js';
-import { hideCursorAndShowCrosshair } from './ts/controls/handle_cursor.js'
 import { playerMove } from './ts/controls/movement.js';
 import { plane, skybox, startingCircle } from './ts/models/environment';
 import { aimCircles, stopGame, gameStarted, gameStartTime } from './ts/game_logic/game_logic';
@@ -30,6 +29,7 @@ renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.autoClear = false;
 document.body.appendChild( renderer.domElement );
 
 // arena
@@ -65,6 +65,7 @@ let mixer = new THREE.AnimationMixer(camera);
 
 loader.load('../../assets/bin/spark_mini.glb', function(gltf) {
     sparkModel = gltf.scene;
+    const scaleFactor = new THREE.Vector3()
     sparkModel.scale.set(1.5,1.5,1.5)
     mixer = new THREE.AnimationMixer(sparkModel);
     //scene.add(model);
@@ -147,35 +148,11 @@ window.addEventListener('resize', () => {
   });
 
 
-
-
-
-
-
-
-
-  const reticleMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
-  const reticlePosition = new THREE.Vector3();
-  // 2. Define the reticle's positions
-  const lineLength = 0.3; // Adjust the length of the lines as needed
-  const reticleGeometry = new THREE.BufferGeometry();
-  const positions = new Float32Array([
-    0, lineLength, 0,
-    0, -lineLength, 0,
-    lineLength, 0, 0,
-    -lineLength, 0, 0,
-    0, 0, 0, // Add a central point (optional)
-  ]);
-  reticleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  
-  // 3. Create the reticle object and add it to the scene
-  const reticle = new THREE.LineSegments(reticleGeometry, reticleMaterial);
-  reticle.position.y += 5
-
-//startBasicGame(clock, scene);
 textMesh.position.y += 5;
-crosshair.position.y += 5;
-scene.add( plane, skybox, light, startingCircle, reticle );
+
+let crosshairPosition = new THREE.Vector3();
+
+scene.add( plane, skybox, light, startingCircle, crosshair );
 
 function animate() {
 	requestAnimationFrame( animate );
@@ -183,18 +160,20 @@ function animate() {
     mixer.update(delta);
     playerMove(camera, delta);
     
-    camera.getWorldDirection(reticlePosition);
-    reticlePosition.multiplyScalar(15);
-    reticlePosition.add(camera.position);
-    reticle.position.copy(reticlePosition);
-    reticle.lookAt(camera.position);
+    camera.getWorldDirection(crosshairPosition);
+    crosshairPosition.multiplyScalar(10);
+    crosshairPosition.add(camera.position);
+    crosshair.position.copy(crosshairPosition);
+    crosshair.lookAt(camera.position);
     if (gameStarted) {
         if (clock.getElapsedTime() - gameStartTime >= 30) {
             stopGame(scene);
         }
     }
-    
+    renderer.clear(); // to render crosshair mesh on top of everything
 	renderer.render( scene, camera );
+    renderer.clearDepth(); // to render crosshair mesh on top of everything
+    renderer.render( crosshair, camera ); // to render crosshair mesh on top of everything
 }
 
 
@@ -203,8 +182,6 @@ function animate() {
  * Cuben ja kameran liikkuminen maailmassa pitää määritellä tämänhetkisen cameran posen mukaan
  */
 
-//calculateMouseMovement();
-hideCursorAndShowCrosshair();
 setupKeyLogger();
 animate();
 

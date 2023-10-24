@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { setupKeyLogger } from './ts/controls/controls.js';
 import { playerMove } from './ts/controls/movement.js';
 import { plane, skybox, startingCircle } from './ts/models/environment';
-import { aimCircles, stopGame, gameStarted, gameStartTime } from './ts/game_logic/game_logic';
+import { stopGame, gameStarted, gameStartTime } from './ts/game_logic/game_logic';
 import { currentSettings } from './ts/game_logic/settings.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { textMesh } from './ts/models/text_models.js';

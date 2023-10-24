@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { aimCircles, gameStarted, startBasicGame, } from './game_logic';
+import { aimSpheres, gameStarted, startBasicGame, } from './game_logic';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { createSparkAnimation, clock, scene } from '../../main';
 import { ShootingTarget, startingCircle } from '../models/environment';
@@ -73,7 +73,7 @@ export function fire(camera : THREE.Camera, scene: THREE.Scene) {
         else {
             
             // need indention fix for this part
-        aimCircles.forEach((circle, index) => {
+            aimSpheres.forEach((circle, index) => {
 
             //console.log(circle)
             if (object_ids.includes(circle.mesh.uuid)) {
@@ -84,11 +84,11 @@ export function fire(camera : THREE.Camera, scene: THREE.Scene) {
                 createSparkAnimation(point.x, point.y, point.z, normal);
                 scene.remove(circle.mesh);
                 circle.mesh.geometry.dispose();
-                aimCircles.splice(index, 1); // remove the sphere
+                aimSpheres.splice(index, 1); // remove the sphere
                 
                 // add new target to screen to always have 3
                 const newTarget = new ShootingTarget();
-                aimCircles.push(newTarget);
+                aimSpheres.push(newTarget);
                 scene.add(newTarget.mesh);
                 incrementScore();
             }

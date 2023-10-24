@@ -11,6 +11,9 @@ import { crosshair } from './ts/models/crosshair.js';
 
 const scene = new THREE.Scene();
 
+// FOR STOPWATCH, NEED TO MOVE LOGIC SOMEWHERE IN FUTURE
+const stopWatchElement = document.getElementById('time') as HTMLParagraphElement;
+
 // Camera things
 const camera = new THREE.PerspectiveCamera( 74, window.innerWidth / window.innerHeight, 0.1, 2000 );
 let cameraPos = new THREE.Vector3(5,3,-6);
@@ -166,7 +169,10 @@ function animate() {
     crosshair.position.copy(crosshairPosition);
     crosshair.lookAt(camera.position);
     if (gameStarted) {
-        if (clock.getElapsedTime() - gameStartTime >= 30) {
+        let stopWatch = clock.getElapsedTime() - gameStartTime;
+        stopWatchElement.textContent = stopWatch.toFixed(4).toString();
+        if ( stopWatch >= 30) {
+            stopWatchElement.textContent = "30.0000";
             stopGame(scene);
         }
     }

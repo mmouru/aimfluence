@@ -29,8 +29,6 @@ function createSphereMesh() {
     return sphere;
 }
     
-
-
 // sky box
 const skyboxSize = 512;
 const skyboxGeo = new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize);
@@ -87,7 +85,7 @@ function calculatePositionForTarget(target) {
     target.rotation.z = -Math.PI;
     target.position.z += 13;
     target.position.y += Math.floor(Math.random() * (13)) + 3;;
-    target.position.x += Math.random() * 11;
+    target.position.x += Math.random() * 20 - 10;
 }
 
 export class ShootingTarget {

@@ -169,10 +169,13 @@ function animate() {
     crosshair.position.copy(crosshairPosition);
     crosshair.lookAt(camera.position);
     if (gameStarted) {
-        let stopWatch = clock.getElapsedTime() - gameStartTime;
-        stopWatchElement.textContent = stopWatch.toFixed(4).toString();
-        if ( stopWatch >= 30) {
-            stopWatchElement.textContent = "30.0000";
+        let stopWatch = (clock.getElapsedTime() - gameStartTime);
+        stopWatch = 60 - stopWatch;
+        let stopWatchString = stopWatch.toFixed(0).toString();
+        console.log(stopWatchString)
+        stopWatchElement.textContent = stopWatchString === "60" ? "1:00" : "0:" + stopWatchString;
+        if ( stopWatch <= 0) {
+            stopWatchElement.textContent = "1:00";
             stopGame(scene);
         }
     }

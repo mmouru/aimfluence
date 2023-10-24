@@ -105,7 +105,6 @@ function calculatePositionForTarget(target: THREE.Mesh) {
         exclusionRangeX.push(sphere.exclusionRange.x);
         exclusionRangeY.push(sphere.exclusionRange.y);
     });
-    
     target.position.y = getRandomNumberInRangeWithExclusions(maxY, minY, exclusionRangeY);
     target.position.x = getRandomNumberInRangeWithExclusions(maxX, minX, exclusionRangeX);
 };

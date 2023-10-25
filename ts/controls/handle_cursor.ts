@@ -22,17 +22,25 @@ export function mouseMoveEvent(event) {
     
     yaw += deltaX * currentSettings.sensitivity / 10;
     pitch -= deltaY * currentSettings.sensitivity / 10;
-
-    // MUST MAKE YAW MAX SETTING HERE
+    // camera should not rotate over
+    
+    pitch = pitch > 89.0 ? 89.0 : pitch;
+    pitch = pitch < -89.0 ? -89.0 : pitch;
+    console.log(pitch, yaw)
 
     newDirection.x = Math.cos(THREE.MathUtils.degToRad(yaw)) * 
                      Math.cos(THREE.MathUtils.degToRad(pitch));
+
     newDirection.y = Math.sin(THREE.MathUtils.degToRad(pitch));
+
     newDirection.z = Math.sin(THREE.MathUtils.degToRad(yaw)) * 
                      Math.cos(THREE.MathUtils.degToRad(pitch));
 
     // make the camera look at the new calculated rotation from the point of
     // the cameras position
+
+    // this causes some bug that camera looks at certain direction but cant rotate 
+    console.log(newDirection.normalize());
     camera.lookAt(camera.position.clone().add(newDirection.normalize()));
 };
 

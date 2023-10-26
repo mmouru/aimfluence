@@ -4,19 +4,6 @@ import * as THREE from 'three';
 import { currentSettings } from "../game_logic/settings";
 // Get references to the canvas and crosshair elements
 const body = document.getElementById("threejs-body")!;
-const crosshair = document.getElementById("crosshair")!;
-
-// Function to hide the cursor and show the crosshair
-function hideCursorAndShowCrosshair() {
-    body.style.cursor = "auto"; // Hide the cursor
-    crosshair.style.display = "block"; // Show the crosshair
-}
-
-// Function to show the cursor and hide the crosshair
-function showCursorAndHideCrosshair() {
-    body.style.cursor = "auto"; // Show the cursor
-    crosshair.style.display = "none"; // Hide the crosshair
-}
 
 let yaw = 90;
 let pitch = 0;
@@ -28,8 +15,6 @@ let newDirection = new THREE.Vector3();
 //mouseMoveEvent({movementX : 0, movementY : 0}, camera);
 
 // Add event listeners to the canvas
-body.addEventListener("mouseenter", hideCursorAndShowCrosshair);
-body.addEventListener("mouseleave", showCursorAndHideCrosshair);
 
 export function mouseMoveEvent(event) {
     let deltaX = event.movementX || 0;
@@ -37,17 +22,25 @@ export function mouseMoveEvent(event) {
     
     yaw += deltaX * currentSettings.sensitivity / 10;
     pitch -= deltaY * currentSettings.sensitivity / 10;
-
-    // MUST MAKE YAW MAX SETTING HERE
+    // camera should not rotate over
+    
+    pitch = pitch > 89.0 ? 89.0 : pitch;
+    pitch = pitch < -89.0 ? -89.0 : pitch;
+    console.log(pitch, yaw)
 
     newDirection.x = Math.cos(THREE.MathUtils.degToRad(yaw)) * 
                      Math.cos(THREE.MathUtils.degToRad(pitch));
+
     newDirection.y = Math.sin(THREE.MathUtils.degToRad(pitch));
+
     newDirection.z = Math.sin(THREE.MathUtils.degToRad(yaw)) * 
                      Math.cos(THREE.MathUtils.degToRad(pitch));
 
     // make the camera look at the new calculated rotation from the point of
     // the cameras position
+
+    // this causes some bug that camera looks at certain direction but cant rotate 
+    console.log(newDirection.normalize());
     camera.lookAt(camera.position.clone().add(newDirection.normalize()));
 };
 
@@ -59,10 +52,3 @@ function handleMouseClick(event) {
 }
 
 body.addEventListener("mousedown", handleMouseClick);
-
-
-
-
-
-
-export {hideCursorAndShowCrosshair};

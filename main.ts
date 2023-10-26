@@ -1,15 +1,17 @@
 import * as THREE from 'three';
 //import { plane } from '/plane';
 import { setupKeyLogger } from './ts/controls/controls.js';
-import { hideCursorAndShowCrosshair } from './ts/controls/handle_cursor.js'
 import { playerMove } from './ts/controls/movement.js';
-import { plane, skybox, startingCircle } from './ts/models/environment';
-import { aimCircles, stopGame, gameStarted, gameStartTime } from './ts/game_logic/game_logic';
-import { currentSettings } from './ts/game_logic/settings.js';
+import { skybox, startingCircle } from './ts/models/environment';
+import { stopGame, gameStarted, gameStartTime } from './ts/game_logic/game_logic';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { textMesh } from './ts/models/text_models.js';
+import { crosshair } from './ts/models/crosshair.js';
 
 const scene = new THREE.Scene();
+
+// FOR STOPWATCH, NEED TO MOVE LOGIC SOMEWHERE IN FUTURE
+const stopWatchElement = document.getElementById('time') as HTMLParagraphElement;
 
 // Camera things
 const camera = new THREE.PerspectiveCamera( 74, window.innerWidth / window.innerHeight, 0.1, 2000 );
@@ -19,8 +21,6 @@ const up = new THREE.Vector3(0,1,0);
 let cameraDir = cameraPos.clone().sub(cameraTarget);
 cameraDir.normalize();
 
-let cameraRight = new THREE.Vector3().crossVectors(up, cameraDir).normalize();
-
 camera.position.set(0,4,-6);
 camera.rotation.x -= Math.PI / 180;
 
@@ -29,6 +29,7 @@ renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.autoClear = false;
 document.body.appendChild( renderer.domElement );
 
 // arena
@@ -64,6 +65,7 @@ let mixer = new THREE.AnimationMixer(camera);
 
 loader.load('../../assets/bin/spark_mini.glb', function(gltf) {
     sparkModel = gltf.scene;
+    const scaleFactor = new THREE.Vector3()
     sparkModel.scale.set(1.5,1.5,1.5)
     mixer = new THREE.AnimationMixer(sparkModel);
     //scene.add(model);
@@ -134,7 +136,6 @@ const clock = new THREE.Clock();
 var havePointerLock = 'pointerLockElement' in document ||
     'mozPointerLockElement' in document ||
     'webkitPointerLockElement' in document;
-console.log(currentSettings);
 
 
 window.addEventListener('resize', () => {
@@ -146,9 +147,11 @@ window.addEventListener('resize', () => {
   });
 
 
-//startBasicGame(clock, scene);
 textMesh.position.y += 5;
-scene.add( plane, skybox, light, startingCircle, textMesh );
+
+let crosshairPosition = new THREE.Vector3();
+
+scene.add( skybox, light, startingCircle, crosshair );
 
 function animate() {
 	requestAnimationFrame( animate );
@@ -156,13 +159,31 @@ function animate() {
     mixer.update(delta);
     playerMove(camera, delta);
     
+    camera.getWorldDirection(crosshairPosition);
+    crosshairPosition.multiplyScalar(10);
+    crosshairPosition.add(camera.position);
+    crosshair.position.copy(crosshairPosition);
+    crosshair.lookAt(camera.position);
     if (gameStarted) {
-        if (clock.getElapsedTime() - gameStartTime >= 30) {
+        let stopWatch = (clock.getElapsedTime() - gameStartTime);
+        stopWatch = Math.round(60 - stopWatch);
+        let stopWatchString: string
+        if (stopWatch < 10) {
+            stopWatchString = "0:0" + stopWatch.toString();
+        } else if (stopWatch === 60) {
+            stopWatchString = "1:00";
+        } else { stopWatchString = "0:" + stopWatch.toString() };
+
+        stopWatchElement.textContent = stopWatchString;
+        if ( stopWatch <= 0) {
+            stopWatchElement.textContent = "1:00";
             stopGame(scene);
         }
     }
-    
+    renderer.clear(); // to render crosshair mesh on top of everything
 	renderer.render( scene, camera );
+    renderer.clearDepth(); // to render crosshair mesh on top of everything
+    renderer.render( crosshair, camera ); // to render crosshair mesh on top of everything
 }
 
 
@@ -171,8 +192,6 @@ function animate() {
  * Cuben ja kameran liikkuminen maailmassa pitää määritellä tämänhetkisen cameran posen mukaan
  */
 
-//calculateMouseMovement();
-hideCursorAndShowCrosshair();
 setupKeyLogger();
 animate();
 

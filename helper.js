@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var settings_1 = require("./ts/game_logic/settings.js");
+var settings_js_1 = require("./ts/game_logic/settings.js");
 function closeMessageBox() {
     var messageBox = document.querySelector('.message-box');
     messageBox.style.display = 'none';
@@ -16,10 +16,10 @@ function handleSkyChange() {
     var selectedValue = selectElement.value;
     switch (selectedValue) {
         case "space":
-            settings_1.currentSettings.skyboxTextures = settings_1.SkyboxTexture.Space;
+            settings_js_1.currentSettings.skyboxTextures = settings_js_1.SkyboxTexture.Space;
             break;
         case "black":
-            settings_1.currentSettings.skyboxTextures = settings_1.SkyboxTexture.Black;
+            settings_js_1.currentSettings.skyboxTextures = settings_js_1.SkyboxTexture.Black;
             break;
     }
 }

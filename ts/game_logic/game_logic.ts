@@ -1,13 +1,15 @@
 //import * as THREE from 'three';
 import { ShootingTarget } from '../models/environment';
 import { mouseMoveEvent } from '../controls/handle_cursor';
-import { score, setZeroScore } from './shooting';
+import { score, resetStats } from './shooting';
 import { startingCircle } from '../models/environment';
+
 export let gameStarted = false;
+
 // force pointerlock when opening game first time
 //document.body.requestPointerLock();
 
-export let aimCircles: ShootingTarget[] = [];
+export let aimSpheres: ShootingTarget[] = [];
 export let hiscore = 0;
 export let gameStartTime: number;
 
@@ -39,27 +41,25 @@ export function startBasicGame(clock: THREE.Clock, scene: THREE.Scene) {
     // init three spheres
     for( let i = 0; i < 3; i++) {
         const sphere = new ShootingTarget();
-        aimCircles.push(sphere);
+        aimSpheres.push(sphere);
         scene.add(sphere.mesh);
     };
 };
 
 export function stopGame(scene: THREE.Scene) {
     gameStarted = false;
-    // clear leftover spehers from screen
-    aimCircles.forEach(leftOverCircle => {
-        scene.remove(leftOverCircle.mesh);
-        leftOverCircle.mesh.geometry.dispose();
+    // clear leftover spheres from screen
+    aimSpheres.forEach(leftOverSphere => {
+        scene.remove(leftOverSphere.mesh);
+        leftOverSphere.mesh.geometry.dispose();
     });
     
     // update hiscore if new one is made and set points back to zero
     if (score > hiscore) {
         hiscore = score;
-        setZeroScore();
         // displaySerpentine();
     };
-    
+    resetStats();
     startingCircle.visible = true;
     // display startgame and hiscore in cube
-
-}
+};

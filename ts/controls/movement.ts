@@ -56,10 +56,18 @@ export function playerMove(camera: THREE.Camera, delta: number) {
     if (moveRight) velocity.x += movementSpeed * delta;
     if (moveLeft) velocity.x -= movementSpeed * delta;
 
-    // sideways
-    camera.translateX( velocity.x * delta);
-    // forward
-    camera.translateZ( velocity.z * delta);
+    // movement forward and sideways
+    // does same as this
+    // camera.translateX( velocity.x * delta);
+    // camera.translateZ( velocity.z * delta);
+    // currently walks faster in diagonal direction, pythagoran theorem...
+    camera.translateOnAxis(new THREE.Vector3(velocity.x, 0, velocity.z), delta)
+
+    // restrict movement to be inside the box
+    camera.position.x = camera.position.x > 14.5 ? 14.5 : camera.position.x;
+    camera.position.x = camera.position.x < -14.5 ? -14.5 : camera.position.x;
+    camera.position.z = camera.position.z > 14.5 ? 14.5 : camera.position.z;
+    camera.position.z = camera.position.z < -14.5 ? -14.5 : camera.position.z;
     // restrict the camera to be at head height always
     camera.position.y = headHeight;
 }

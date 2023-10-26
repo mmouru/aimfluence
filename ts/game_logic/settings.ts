@@ -24,6 +24,9 @@ interface Settings {
     hitsounds: boolean,
     hiscore: number
 };
+const closeSettingsButton = document.getElementById('saveSettings') as HTMLElement;
+
+closeSettingsButton.addEventListener('click', saveSettingsToLocalStorage);
 
 const selectSkyList = document.getElementById('sky') as HTMLSelectElement;
 const sensitivitySlider = document.getElementById('sensitivity') as HTMLInputElement;
@@ -32,7 +35,10 @@ sensitivitySlider.addEventListener('change', changeSensitivityValue);
 selectSkyList.addEventListener('change', changeSkyValue);
 
 export function saveSettingsToLocalStorage() {
-    localStorage.setItem('AimplifySettings', JSON.stringify(currentSettings));
+    console.log("MORO")
+    const currentSettingsString = JSON.stringify(currentSettings);
+    console.log(currentSettingsString);
+    localStorage.setItem('AimplifySettings', currentSettingsString);
 };
 
 function changeSensitivityValue() {
@@ -61,9 +67,23 @@ let currentSettings : Settings;
 try {
     const storedSettingsString = localStorage.getItem('AimplifySettings');
     if (storedSettingsString) {
-        currentSettings = JSON.parse(storedSettingsString);
+        const foundSettings = JSON.parse(storedSettingsString);
+        console.log("found settings", foundSettings.skyboxTextures)
+        currentSettings = {
+            sensitivity: foundSettings.sensitivity,
+            sounds: foundSettings.sounds,
+            skyboxTextures: foundSettings.skyboxTextures,
+            crosshairColor: foundSettings.crosshairColor,
+            hitsounds: foundSettings.hitsounds,
+            crosshairLength: foundSettings.crosshairLength,
+            hiscore: foundSettings.hiscore
+        };
+        changeSkyBoxTexture(currentSettings.skyboxTextures);
+        console.log(currentSettings.sensitivity.toString());
+        sensitivitySlider.value = currentSettings.sensitivity.toString();
     } else { throw Error }
-} catch {
+} catch (err){
+    console.log("ERROR ERROR", err)
     // if no settings found setup backup
     currentSettings = {
         sensitivity: 0.5,

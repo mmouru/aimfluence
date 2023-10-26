@@ -2,9 +2,8 @@ import * as THREE from 'three';
 //import { plane } from '/plane';
 import { setupKeyLogger } from './ts/controls/controls.js';
 import { playerMove } from './ts/controls/movement.js';
-import { plane, skybox, startingCircle } from './ts/models/environment';
+import { skybox, startingCircle } from './ts/models/environment';
 import { stopGame, gameStarted, gameStartTime } from './ts/game_logic/game_logic';
-import { currentSettings } from './ts/game_logic/settings.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { textMesh } from './ts/models/text_models.js';
 import { crosshair } from './ts/models/crosshair.js';
@@ -21,8 +20,6 @@ let cameraTarget = new THREE.Vector3(0,0,0);
 const up = new THREE.Vector3(0,1,0);
 let cameraDir = cameraPos.clone().sub(cameraTarget);
 cameraDir.normalize();
-
-let cameraRight = new THREE.Vector3().crossVectors(up, cameraDir).normalize();
 
 camera.position.set(0,4,-6);
 camera.rotation.x -= Math.PI / 180;
@@ -139,7 +136,6 @@ const clock = new THREE.Clock();
 var havePointerLock = 'pointerLockElement' in document ||
     'mozPointerLockElement' in document ||
     'webkitPointerLockElement' in document;
-console.log(currentSettings);
 
 
 window.addEventListener('resize', () => {
@@ -155,7 +151,7 @@ textMesh.position.y += 5;
 
 let crosshairPosition = new THREE.Vector3();
 
-scene.add( plane, skybox, light, startingCircle, crosshair );
+scene.add( skybox, light, startingCircle, crosshair );
 
 function animate() {
 	requestAnimationFrame( animate );

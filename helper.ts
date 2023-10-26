@@ -1,5 +1,5 @@
 
-import { currentSettings, SkyboxTexture } from "./ts/game_logic/settings.js";
+import { currentSettings, SkyboxTexture, saveSettingsToLocalStorage } from "./ts/game_logic/settings.js";
 
 function closeMessageBox() {
     const messageBox = document.querySelector('.message-box') as HTMLDivElement;

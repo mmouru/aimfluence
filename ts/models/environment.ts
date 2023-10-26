@@ -23,11 +23,6 @@ function createPlaneMaterial(hexColor: number, transparent?: boolean, opacity?: 
 function createPhongMaterial(hexColor: number) {
     return new THREE.MeshPhongMaterial({color: hexColor, shininess: 60, specular: 0x00139E})
 }
-// floor
-const planeGeometry = new THREE.PlaneGeometry(25, 25); // Width and height of the plane
-const plane = new THREE.Mesh(planeGeometry, createPlaneMaterial(hexColors.white, true, 0.5));
-
-plane.rotation.x = -Math.PI / 2;
 
 const sphereRadius = 1;
 
@@ -65,12 +60,14 @@ let skybox = new THREE.Mesh(skyboxGeo, skyboxMaterial);
  * Update skybox geometrys textures during rendering
  * @param texture Unique texture defined in settings
  */
-export function changeSkyBoxTexture(texture: SkyboxTexture) {
+export function changeSkyBoxTexture(texture: string) {
+    console.log("TÄÄLLÄ ASTI");
     switch(texture) {
         case("space"):
             skybox.material = spaceSkyboxMaterial;
             break;
         case("black"):
+            console.log("black sky")
             skybox.material = blackTexture;
             break;
     }
@@ -131,4 +128,4 @@ export class ShootingTarget {
     }
 }
 
-export { plane, skybox, startingCircle };
+export { skybox, startingCircle };

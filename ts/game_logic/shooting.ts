@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { aimSpheres, gameStarted, startBasicGame, } from './game_logic';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { createSparkAnimation, clock, scene } from '../../main';
+import { clock, scene } from '../../main';
+import { createSparkAnimation } from '../models/animations';
 import { ShootingTarget, startingCircle } from '../models/environment';
 
 /// score for aim trainer

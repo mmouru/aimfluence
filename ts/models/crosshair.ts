@@ -18,4 +18,8 @@ crosshairGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 
 // 3. Create the crosshair object and add it to the scene
 const crosshair = new THREE.LineSegments(crosshairGeometry, crosshairMaterial);
 
-export { crosshair }
+function updateCrosshairLocation() {
+  
+};
+
+export { crosshair, updateCrosshairLocation }

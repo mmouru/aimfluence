@@ -12,7 +12,6 @@ let mixer = new THREE.AnimationMixer(camera);
 // load model, do not yet add to scene
 modelLoader.load('../../assets/bin/spark_mini.glb', function(gltf) {
     sparkModel = gltf.scene;
-    const scaleFactor = new THREE.Vector3()
     sparkModel.scale.set(1.5,1.5,1.5)
     mixer = new THREE.AnimationMixer(sparkModel);
     //scene.add(model);

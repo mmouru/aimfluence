@@ -78,7 +78,7 @@ let skybox = new THREE.Mesh(skyboxGeo, skyboxMaterial);
  * @param texture Unique texture defined in settings
  */
 export function changeSkyBoxTexture(texture: string) {
-    console.log("TÄÄLLÄ ASTI");
+    console.log("TÄÄLLÄ ASTI", texture);
     switch(texture) {
         case("space"):
             skybox.material = spaceSkyboxMaterial;
@@ -86,6 +86,9 @@ export function changeSkyBoxTexture(texture: string) {
         case("black"):
             console.log("black sky")
             skybox.material = blackTexture;
+            break;
+        default:
+            skybox.material = spaceSkyboxMaterial;
             break;
     }
 }

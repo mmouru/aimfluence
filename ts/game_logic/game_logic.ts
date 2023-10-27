@@ -3,6 +3,7 @@ import { ShootingTarget } from '../models/environment';
 import { mouseMoveEvent } from '../controls/handle_cursor';
 import { score, resetStats } from './shooting';
 import { startingCircle } from '../models/environment';
+import { scene } from '../../main';
 
 export let gameStarted = false;
 
@@ -46,7 +47,7 @@ export function startBasicGame(clock: THREE.Clock, scene: THREE.Scene) {
     };
 };
 
-export function stopGame(scene: THREE.Scene) {
+export function stopGame() {
     gameStarted = false;
     // clear leftover spheres from screen
     aimSpheres.forEach(leftOverSphere => {

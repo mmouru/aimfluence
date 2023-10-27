@@ -30,11 +30,27 @@
 			<label for="sensitivity">Sensitivity:</label>
 			<input type="range" id="sensitivity"  min="0.01" max="2" step="0.01" value="0.5">
 			<br>
+			<label for="crosshairLength">Crosshair Length:</label>
+			<input type="range" id="crosshair-length"  min="0.01" max="2" step="0.01" value="0.2">
+			<br>
+			<!-- crosshair color settings with sliders-->
+			<label for="crosshairRed">Crosshair red:</label>
+			<input type="range" id="crosshair-red"  min="0" max="255" step="1" value="0">
+			<br>
+			<label for="crosshairGreen">Crosshair green:</label>
+			<input type="range" id="crosshair-green"  min="0" max="255" step="1" value="255">
+			<br>
+			<label for="crosshairBlue">Crosshair blue:</label>
+			<input type="range" id="crosshair-blue"  min="0" max="255" step="1" value="0">
+			<br>
 			<label for="flag">Textures:</label>
 			<select name="sky" id="sky">
 				<option value="space">Space</option>
 				<option value="black">Black</option>
 			</select>
+			<label>
+				<input type="checkbox" id="sounds" name="preference" value="Option 1"> Sounds
+			</label>
 			<br>
 		</div>
 		<script type="module" src="/main.ts"></script>

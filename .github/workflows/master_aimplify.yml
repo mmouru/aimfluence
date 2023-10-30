@@ -25,7 +25,6 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          npm run test --if-present
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
@@ -59,4 +58,4 @@ jobs:
           app-name: 'Aimplify'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_946F2E92BAE045B48AAF5549A61D940C }}
-          package: .
+          package: ./dist

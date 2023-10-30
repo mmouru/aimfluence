@@ -1,8 +1,10 @@
 import * as THREE from 'three';
 import { aimSpheres, gameStarted, startBasicGame, } from './game_logic';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { createSparkAnimation, clock, scene } from '../../main';
+import { clock, scene } from '../../main';
+import { createSparkAnimation } from '../models/animations';
 import { ShootingTarget, startingCircle } from '../models/environment';
+import { currentSettings } from './settings';
 
 /// score for aim trainer
 export let score = 0;
@@ -55,8 +57,10 @@ export function fire(camera : THREE.Camera, scene: THREE.Scene) {
     const direction = camera.getWorldDirection(new THREE.Vector3());
     raycaster.set(origin, direction);
     
-    playAudio(shootSound);
-
+    if (currentSettings.sounds) {
+        playAudio(shootSound);
+    };
+    
     const intersects = raycaster.intersectObjects(scene.children);
     const object_ids = intersects.map(intersect => intersect.object.uuid);
 

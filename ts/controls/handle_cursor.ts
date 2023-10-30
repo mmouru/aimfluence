@@ -26,7 +26,7 @@ export function mouseMoveEvent(event) {
     
     pitch = pitch > 89.0 ? 89.0 : pitch;
     pitch = pitch < -89.0 ? -89.0 : pitch;
-    console.log(pitch, yaw)
+    
 
     newDirection.x = Math.cos(THREE.MathUtils.degToRad(yaw)) * 
                      Math.cos(THREE.MathUtils.degToRad(pitch));
@@ -40,7 +40,6 @@ export function mouseMoveEvent(event) {
     // the cameras position
 
     // this causes some bug that camera looks at certain direction but cant rotate 
-    console.log(newDirection.normalize());
     camera.lookAt(camera.position.clone().add(newDirection.normalize()));
 };
 

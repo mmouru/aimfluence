@@ -14,7 +14,7 @@ body {
     z-index: 9999; /* Ensures it's above other content */
 }
 
-.message-box {
+#message-box {
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 5px;

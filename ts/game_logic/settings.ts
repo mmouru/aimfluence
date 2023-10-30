@@ -26,17 +26,22 @@ interface Settings {
     hiscore: number
 };
 
+const welcomeMessageCloseButton = document.getElementById('welcome-message-close-button') as HTMLElement;
+const messageBox = document.getElementById('message-box') as HTMLDivElement;
 const closeSettingsButton = document.getElementById('saveSettings') as HTMLElement;
 const selectSkyList = document.getElementById('sky') as HTMLSelectElement;
 const sensitivitySlider = document.getElementById('sensitivity') as HTMLInputElement;
 const crosshairLengthSlider = document.getElementById('crosshair-length') as HTMLInputElement;
 const soundsOn = document.getElementById('sounds') as HTMLInputElement;
+const settingsScreen = document.getElementById('settings') as HTMLElement;
+const changeSkyTextureInput = document.getElementById('sky') as HTMLElement;
 
 // crosshair color
 const crosshairRed = document.getElementById('crosshair-red') as HTMLInputElement;
 const crosshairGreen = document.getElementById('crosshair-green') as HTMLInputElement;
 const crosshairBlue = document.getElementById('crosshair-blue') as HTMLInputElement;
 
+welcomeMessageCloseButton.addEventListener('click', closeMessageBox);
 closeSettingsButton.addEventListener('click', saveSettingsToLocalStorage);
 sensitivitySlider.addEventListener('change', changeSensitivityValue);
 crosshairLengthSlider.addEventListener('change', changeCrosshairLength);
@@ -48,15 +53,20 @@ crosshairGreen.addEventListener('change', changeCrosshairColor);
 crosshairBlue.addEventListener('change', changeCrosshairColor);
 
 export function saveSettingsToLocalStorage() {
-    console.log("MORO")
     const currentSettingsString = JSON.stringify(currentSettings);
-    console.log(currentSettingsString);
     localStorage.setItem('AimplifySettings', currentSettingsString);
+    settingsScreen.style.display = 'none';
+    document.body.requestPointerLock();
 };
 
 function changeSensitivityValue() {
     const newSensitivity = parseFloat(sensitivitySlider.value);
     currentSettings.sensitivity = newSensitivity;
+};
+
+function closeMessageBox() {
+    messageBox.style.display = 'none';
+    document.body.requestPointerLock();
 };
 
 function changeWhetherSoundsAreOnOrOff() {
@@ -145,8 +155,6 @@ function checkForSettingsInLocalStorage() {
         // if no settings found setup backup
         
     }
-}
-
-
+};
 
 export { currentSettings, SkyboxTexture, checkForSettingsInLocalStorage }

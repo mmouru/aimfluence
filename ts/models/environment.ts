@@ -52,15 +52,15 @@ const skyboxGeo = new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize);
 
 
 const spaceTextureUrls = [
-                            '/assets/textures/sky_lf.jpg',
-                            '/assets/textures/sky_rt.jpg',
-                            '/assets/textures/sky_up.jpg',
-                            '/assets/textures/sky_dn.jpg',
-                            '/assets/textures/sky_ft.jpg',
-                            '/assets/textures/sky_bk.jpg',
+                            'textures/sky_lf.jpg',
+                            'textures/sky_rt.jpg',
+                            'textures/sky_up.jpg',
+                            'textures/sky_dn.jpg',
+                            'textures/sky_ft.jpg',
+                            'textures/sky_bk.jpg',
                         ];
 
-const texture = new THREE.TextureLoader().load( "assets/textures/tekstuuri.png" );
+const texture = new THREE.TextureLoader().load( "textures/tekstuuri.png" );
 texture.wrapS = THREE.RepeatWrapping;
 texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.set( 10, 10 );
@@ -99,7 +99,7 @@ export function changeSkyBoxTexture(texture: string) {
 
 function add3DModelsToScene(scene: THREE.Scene) {
 
-    modelLoader.load('assets/bin/room.glb', function (gltf) {
+    modelLoader.load('/bin/room.glb', function (gltf) {
         const model = gltf.scene;
         //model.rotation.x -= (Math.PI / 180) *;
         model.position.y += 1;

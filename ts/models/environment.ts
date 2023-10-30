@@ -54,7 +54,7 @@ const skyboxGeo = new THREE.BoxGeometry(skyboxSize, skyboxSize, skyboxSize);
 const spaceTextureUrls = [
                             'textures/sky_lf.jpg',
                             'textures/sky_rt.jpg',
-                            'textures/sky_up.jpg',
+                            'sky_up.jpg',
                             'textures/sky_dn.jpg',
                             'textures/sky_ft.jpg',
                             'textures/sky_bk.jpg',

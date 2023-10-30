@@ -10,7 +10,7 @@ let sparkAnimations: THREE.AnimationClip[];
 let mixer = new THREE.AnimationMixer(camera);
 
 // load model, do not yet add to scene
-modelLoader.load('bin/spark_mini.glb', function(gltf) {
+modelLoader.load('models/spark_mini.glb', function(gltf) {
     sparkModel = gltf.scene;
     sparkModel.scale.set(1.5,1.5,1.5)
     mixer = new THREE.AnimationMixer(sparkModel);

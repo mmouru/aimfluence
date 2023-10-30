@@ -99,7 +99,7 @@ export function changeSkyBoxTexture(texture: string) {
 
 function add3DModelsToScene(scene: THREE.Scene) {
 
-    modelLoader.load('bin/room.glb', function (gltf) {
+    modelLoader.load('models/room.glb', function (gltf) {
         const model = gltf.scene;
         //model.rotation.x -= (Math.PI / 180) *;
         model.position.y += 1;

@@ -84,6 +84,7 @@ svg {
 
 .meters {
   visibility: hidden;
+  font-family: 'Orbitron', sans-serif;
 }
 
 #score-meter {

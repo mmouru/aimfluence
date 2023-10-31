@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 import { aimSpheres, gameStarted, startBasicGame, } from './game_logic';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { clock, scene } from '../../main';
 import { createSparkAnimation } from '../models/animations';
-import { ShootingTarget, startingCircle } from '../models/environment';
+import { ShootingTarget, startGameElement } from '../models/environment';
 import { currentSettings } from './settings';
 
 /// score for aim trainer
@@ -70,8 +69,8 @@ export function fire(camera : THREE.Camera, scene: THREE.Scene) {
 
     if (intersects.length > 0) {
         // start game if hitting the start button
-        if (object_ids.includes(startingCircle.uuid) && !gameStarted) {
-            startingCircle.visible = false;
+        if (object_ids.includes(startGameElement.uuid) && !gameStarted) {
+            startGameElement.visible = false;
             startBasicGame(clock, scene);
         }
         else {

@@ -2,7 +2,7 @@
 import { ShootingTarget } from '../models/environment';
 import { mouseMoveEvent } from '../controls/handle_cursor';
 import { score, accuracy, resetStats } from './shooting';
-import { startingCircle } from '../models/environment';
+import { startGameElement } from '../models/environment';
 import { scene } from '../../main';
 
 export let gameStarted = false;
@@ -99,6 +99,6 @@ export function stopGame() {
     addScoresToDB(score, parseFloat(accuracy));
 
     resetStats();
-    startingCircle.visible = true;
+    startGameElement.visible = true;
     // display startgame and hiscore in cube
 };

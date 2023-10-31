@@ -16,14 +16,23 @@ export let gameStartTime: number;
 
 document.addEventListener("pointerlockchange", lockChangeAlert, false);
 const settingsDiv = document.querySelector('#settings') as HTMLDivElement;
+const closeButton = document.getElementById('saveSettings') as HTMLElement;
+const waitCircle = document.getElementById('wait-second-circle') as HTMLElement;
 
 function lockChangeAlert () {
     if (document.pointerLockElement === document.body) {
         document.addEventListener('mousemove', mouseMoveEvent);
         settingsDiv.style.display = 'none';
     } else {
+        closeButton.style.display = 'none';
+        waitCircle.style.display = 'block';
         document.removeEventListener('mousemove', mouseMoveEvent);
         settingsDiv.style.display = 'block';
+        setTimeout(() => {
+            closeButton.style.display = 'block';
+            waitCircle.style.display = 'none';
+        }, 1000);
+
     }
 };
 

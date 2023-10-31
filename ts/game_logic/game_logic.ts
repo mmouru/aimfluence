@@ -1,7 +1,7 @@
 //import * as THREE from 'three';
 import { ShootingTarget } from '../models/environment';
 import { mouseMoveEvent } from '../controls/handle_cursor';
-import { score, resetStats } from './shooting';
+import { score, accuracy, resetStats } from './shooting';
 import { startingCircle } from '../models/environment';
 import { scene } from '../../main';
 
@@ -26,6 +26,31 @@ function lockChangeAlert () {
         settingsDiv.style.display = 'block';
     }
 };
+
+/**
+ * used to store scores to database for analysis
+ */
+function addScoresToDB(score: number, accuracy: number) {
+    const method = 'POST';
+    const headers = {
+        'Content-Type': 'application/json',
+        'X-MS-API-ROLE': 'anonymous'
+      }
+    const data = {
+        currentDateTime: new Date(),
+        points: score,
+        accuracy: accuracy
+    }
+
+    fetch('/data-api/rest/Scores', {method, headers, body: JSON.stringify(data)})
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Handle the response data, which may contain the newly created record
+        })
+        .catch(error => {
+            console.error(error); // Handle any errors
+        });
+}
 
 function showScoreMeters() {
     const scoreMeters = document.querySelectorAll('.meters') as NodeListOf<Element>;
@@ -60,6 +85,10 @@ export function stopGame() {
         hiscore = score;
         // displaySerpentine();
     };
+
+
+    addScoresToDB(score, parseFloat(accuracy));
+
     resetStats();
     startingCircle.visible = true;
     // display startgame and hiscore in cube

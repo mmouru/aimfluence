@@ -108,12 +108,18 @@ function changeCrosshairLength() {
     updateCrosshairLength(currentSettings.crosshairLength);
 };
 
-function updateSettingsValueAfterFinding(foundSettings) {
-    crosshairRedSpan.innerHTML = event.target.value;
-    crosshairGreenSpan.innerHTML = event.target.value;
-    crosshairBlueSpan.innerHTML = event.target.value;
-    changeSensitivitySpan.innerHTML = sensitivitySlider.value;
-    crosshairLengthSpan.innerHTML = crosshairLengthSlider.value;
+// Helper function to update crosshair from storage
+function updateCrosshairSettingsAfterFinding(settings: Settings) {
+    crosshairRedSpan.innerHTML = settings.crosshairColor.r.toString();
+    crosshairGreenSpan.innerHTML = settings.crosshairColor.g.toString();
+    crosshairBlueSpan.innerHTML = settings.crosshairColor.b.toString();
+    crosshairLengthSpan.innerHTML = settings.crosshairLength.toString();
+    crosshairLengthSlider.value = settings.crosshairLength.toString();
+    crosshairRed.value = settings.crosshairColor.r.toString();
+    crosshairGreen.value = settings.crosshairColor.g.toString();
+    crosshairBlue.value = settings.crosshairColor.b.toString();
+    changeSensitivitySpan.innerHTML = settings.sensitivity.toString();
+    updateCrosshairColor(settings.crosshairColor);
 };
 
 function changeSkyValue() {
@@ -159,13 +165,11 @@ function checkForSettingsInLocalStorage() {
                 hiscore: foundSettings.hiscore
             };
             changeSkyBoxTexture(currentSettings.skyboxTextures);
-            console.log(currentSettings.sensitivity.toString());
             sensitivitySlider.value = currentSettings.sensitivity.toString();
             selectSkyList.value = currentSettings.skyboxTextures;
             updateCrosshairLength(currentSettings.crosshairLength);
-            crosshairLengthSlider.value = currentSettings.crosshairLength.toString();
+            updateCrosshairSettingsAfterFinding(currentSettings);
             soundsOn.checked = currentSettings.sounds ? true : false;
-            console.log(currentSettings)
         } else { throw Error }
     } catch (err){
         console.log("ERROR ERROR", err)

@@ -34,7 +34,11 @@ const sensitivitySlider = document.getElementById('sensitivity') as HTMLInputEle
 const crosshairLengthSlider = document.getElementById('crosshair-length') as HTMLInputElement;
 const soundsOn = document.getElementById('sounds') as HTMLInputElement;
 const settingsScreen = document.getElementById('settings') as HTMLElement;
-const changeSkyTextureInput = document.getElementById('sky') as HTMLElement;
+const changeSensitivitySpan = document.getElementById('sensitivity-value') as HTMLElement;
+const crosshairLengthSpan = document.getElementById('crosshair-length-value') as HTMLElement;
+const crosshairRedSpan = document.getElementById('crosshair-red-value') as HTMLElement;
+const crosshairGreenSpan = document.getElementById('crosshair-green-value') as HTMLElement;
+const crosshairBlueSpan = document.getElementById('crosshair-blue-value') as HTMLElement;
 
 // crosshair color
 const crosshairRed = document.getElementById('crosshair-red') as HTMLInputElement;
@@ -43,14 +47,14 @@ const crosshairBlue = document.getElementById('crosshair-blue') as HTMLInputElem
 
 welcomeMessageCloseButton.addEventListener('click', closeMessageBox);
 closeSettingsButton.addEventListener('click', saveSettingsToLocalStorage);
-sensitivitySlider.addEventListener('change', changeSensitivityValue);
-crosshairLengthSlider.addEventListener('change', changeCrosshairLength);
+sensitivitySlider.addEventListener('input', changeSensitivityValue);
+crosshairLengthSlider.addEventListener('input', changeCrosshairLength);
 soundsOn.addEventListener('change', changeWhetherSoundsAreOnOrOff);
 selectSkyList.addEventListener('change', changeSkyValue);
 
-crosshairRed.addEventListener('change', changeCrosshairColor);
-crosshairGreen.addEventListener('change', changeCrosshairColor);
-crosshairBlue.addEventListener('change', changeCrosshairColor);
+crosshairRed.addEventListener('input', changeCrosshairColor);
+crosshairGreen.addEventListener('input', changeCrosshairColor);
+crosshairBlue.addEventListener('input', changeCrosshairColor);
 
 export function saveSettingsToLocalStorage() {
     const currentSettingsString = JSON.stringify(currentSettings);
@@ -61,6 +65,7 @@ export function saveSettingsToLocalStorage() {
 
 function changeSensitivityValue() {
     const newSensitivity = parseFloat(sensitivitySlider.value);
+    changeSensitivitySpan.innerHTML = sensitivitySlider.value;
     currentSettings.sensitivity = newSensitivity;
 };
 
@@ -81,12 +86,15 @@ function changeCrosshairColor(event: any) {
     switch(event.target.id) {
         case('crosshair-red'):
             currentSettings.crosshairColor.r = newValue;
+            crosshairRedSpan.innerHTML = event.target.value;
             break;
         case('crosshair-green'):
             currentSettings.crosshairColor.g = newValue;
+            crosshairGreenSpan.innerHTML = event.target.value;
             break;
         case('crosshair-blue'):
             currentSettings.crosshairColor.b = newValue;
+            crosshairBlueSpan.innerHTML = event.target.value;
             break;
     }
     updateCrosshairColor(currentSettings.crosshairColor);
@@ -96,7 +104,16 @@ function changeCrosshairLength() {
     const newLength = parseFloat(crosshairLengthSlider.value);
     console.log(newLength);
     currentSettings.crosshairLength = newLength;
+    crosshairLengthSpan.innerHTML = crosshairLengthSlider.value;
     updateCrosshairLength(currentSettings.crosshairLength);
+};
+
+function updateSettingsValueAfterFinding(foundSettings) {
+    crosshairRedSpan.innerHTML = event.target.value;
+    crosshairGreenSpan.innerHTML = event.target.value;
+    crosshairBlueSpan.innerHTML = event.target.value;
+    changeSensitivitySpan.innerHTML = sensitivitySlider.value;
+    crosshairLengthSpan.innerHTML = crosshairLengthSlider.value;
 };
 
 function changeSkyValue() {

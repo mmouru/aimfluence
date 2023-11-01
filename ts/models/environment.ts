@@ -62,6 +62,7 @@ const spaceTextureUrls = [
 
 const texture = textureLoader.load("textures/tekstuuri.png");
 const startGameTexture = textureLoader.load("textures/start.jpg");
+const logoTexture = textureLoader.load("textures/logo.png");
 texture.wrapS = THREE.RepeatWrapping;
 texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.set( 10, 10 );
@@ -118,12 +119,21 @@ function add3DModelsToScene(scene: THREE.Scene) {
         scene.add(model); })
 };
 
+// start game button
 const material = new THREE.MeshBasicMaterial({ map: startGameTexture });
 const planeGeometry = new THREE.PlaneGeometry(10, 3);
 const startGameElement = new THREE.Mesh(planeGeometry, material);
 startGameElement.rotation.y += (Math.PI / 180) * 180;
 startGameElement.position.z += 14.9;
 startGameElement.position.y += 7;
+
+// logo to show
+const logoMaterial = new THREE.MeshBasicMaterial({ map: logoTexture, transparent: true });
+const logoGeometry = new THREE.PlaneGeometry(20, 5);
+const logoElement = new THREE.Mesh(logoGeometry, logoMaterial);
+logoElement.rotation.y += (Math.PI / 180) * 180;
+logoElement.position.z += 14.9;
+logoElement.position.y += 12;
 
 // Helper function to calculate random position for spheres without collision
 function getRandomNumberInRangeWithExclusions(max: number, min: number, exclusions: number[][]) {
@@ -177,12 +187,12 @@ export function createSceneWithCameraAndModels() : { scene: THREE.Scene, camera:
     scene.add(ambientLight, directionalLight);
     // add crosshair;
     scene.add(crosshair);
-    // add start play button
-    scene.add(startGameElement);
+    // add start play button, logo
+    scene.add(startGameElement, logoElement);
     // add camera
     scene.add(camera);
 
     return {scene, camera};
 };
 
-export { skybox, startGameElement };
+export { skybox, startGameElement, logoElement };

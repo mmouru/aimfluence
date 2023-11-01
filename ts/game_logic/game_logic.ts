@@ -2,7 +2,7 @@
 import { ShootingTarget } from '../models/environment';
 import { mouseMoveEvent } from '../controls/handle_cursor';
 import { score, accuracy, resetStats } from './shooting';
-import { startGameElement } from '../models/environment';
+import { startGameElement, logoElement } from '../models/environment';
 import { scene } from '../../main';
 
 export let gameStarted = false;
@@ -27,7 +27,7 @@ function lockChangeAlert () {
         closeButton.style.display = 'none';
         waitCircle.style.display = 'block';
         document.removeEventListener('mousemove', mouseMoveEvent);
-        settingsDiv.style.display = 'block';
+        settingsDiv.style.display = 'flex';
         setTimeout(() => {
             closeButton.style.display = 'block';
             waitCircle.style.display = 'none';
@@ -100,5 +100,6 @@ export function stopGame() {
 
     resetStats();
     startGameElement.visible = true;
+    logoElement.visible = true;
     // display startgame and hiscore in cube
 };

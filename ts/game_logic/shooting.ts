@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { aimSpheres, gameStarted, startBasicGame, } from './game_logic';
 import { clock, scene } from '../../main';
 import { createSparkAnimation } from '../models/animations';
-import { ShootingTarget, startGameElement } from '../models/environment';
+import { ShootingTarget, startGameElement, logoElement } from '../models/environment';
 import { currentSettings } from './settings';
 
 /// score for aim trainer
@@ -71,6 +71,7 @@ export function fire(camera : THREE.Camera, scene: THREE.Scene) {
         // start game if hitting the start button
         if (object_ids.includes(startGameElement.uuid) && !gameStarted) {
             startGameElement.visible = false;
+            logoElement.visible = false;
             startBasicGame(clock, scene);
         }
         else {
@@ -87,10 +88,10 @@ export function fire(camera : THREE.Camera, scene: THREE.Scene) {
                 createSparkAnimation(point.x, point.y, point.z, normal);
                 scene.remove(circle.mesh);
                 circle.mesh.geometry.dispose();
-                aimSpheres.splice(index, 1); // remove the sphere
-                
-                // add new target to screen to always have 3
+
+                // add new target before removing the old one, since we want to exclude the current position from new target
                 const newTarget = new ShootingTarget();
+                aimSpheres.splice(index, 1); // remove the sphere
                 aimSpheres.push(newTarget);
                 scene.add(newTarget.mesh);
                 incrementScore();

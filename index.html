@@ -31,33 +31,56 @@
 				<circle cx="20" cy="20" r="10" class="fill"></circle>
 			</svg>
 			<div class="close-button" id="saveSettings">&#10006;</div>
-			
 			<h2>Settings</h2>
-			<label for="sensitivity">Sensitivity:</label>
-			<input type="range" id="sensitivity"  min="0.01" max="2" step="0.01" value="0.5">
-			<br>
-			<label for="crosshairLength">Crosshair Length:</label>
-			<input type="range" id="crosshair-length"  min="0.01" max="2" step="0.01" value="0.2">
-			<br>
-			<!-- crosshair color settings with sliders-->
-			<label for="crosshairRed">Crosshair red:</label>
-			<input type="range" id="crosshair-red"  min="0" max="255" step="1" value="0">
-			<br>
-			<label for="crosshairGreen">Crosshair green:</label>
-			<input type="range" id="crosshair-green"  min="0" max="255" step="1" value="255">
-			<br>
-			<label for="crosshairBlue">Crosshair blue:</label>
-			<input type="range" id="crosshair-blue"  min="0" max="255" step="1" value="0">
-			<br>
-			<label for="flag">Sky:</label>
-			<select name="sky" id="sky">
-				<option value="space">Space</option>
-				<option value="black">Black</option>
-			</select>
-			<label>
-				<input type="checkbox" id="sounds" name="preference" value="Option 1"> Sounds
-			</label>
-			<br>
+
+
+
+			<div class="settings-grid">
+
+
+
+			<div class="box">
+				<h3>Mouse</h3>
+				<label for="sensitivity" class="settings-labels">Sensitivity:</label>
+				<input type="range" class="range" id="sensitivity" min="0.01" max="2" step="0.01" value="0.5">
+				<span class="settings-values" id="sensitivity-value">3</span>
+			</div>
+
+			<div class="box">
+				<h3>Sound</h3>
+				<label>
+					<input type="checkbox" id="sounds" name="preference" value="Option 1"> Sounds
+				</label>
+			</div>
+			<div class="box">
+				<h3>Crosshair</h3>
+				<label for="crosshairLength" class="settings-labels">Length:</label>
+				<input class="range" type="range" id="crosshair-length"  min="0.01" max="2" step="0.01" value="0.2">
+				<span class="settings-values" id="crosshair-length-value">3</span>
+				<br>
+				<!-- crosshair color settings with sliders-->
+				<label for="crosshairRed"  class="settings-labels">Color red:</label>
+				<input class="range" type="range" id="crosshair-red"  min="0" max="255" step="1" value="0">
+				<span class="settings-values" id="crosshair-red-value">3</span>
+				<br>
+				<label for="crosshairGreen"  class="settings-labels">Color green:</label>
+				<input class="range" type="range" id="crosshair-green"  min="0" max="255" step="1" value="255">
+				<span class="settings-values" id="crosshair-green-value">3</span>
+				<br>
+				<label for="crosshairBlue"  class="settings-labels">Color blue:</label>
+				<input class="range" type="range" id="crosshair-blue"  min="0" max="255" step="1" value="0">
+				<span class="settings-values" id="crosshair-blue-value">3</span>
+			</div>
+			<div class="box">
+				<h3>Terrain</h3>
+				<label for="flag">Sky:</label>
+				<select name="sky" id="sky">
+					<option value="space">Space</option>
+					<option value="black">Black</option>
+				</select>
+			</div>
+			</div>
+			
 		</div>
 		<script type="module" src="/main.ts"></script>
         <audio id="shoot1">
